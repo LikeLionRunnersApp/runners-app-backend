@@ -15,7 +15,6 @@ class MemberRepositoryTest {
         Member member = new Member();
         member.setName("ya ong");
         member.setMemberId("testMan");
-        member.setEmail("lion@naver.com");
         member.setPassword("123");
         //when
         Member result = memberRepository.save(member);
@@ -23,7 +22,6 @@ class MemberRepositoryTest {
         //then
         Assertions.assertThat(result).isEqualTo(member);
         Assertions.assertThat(result.getName()).isEqualTo(member.getName());
-
     }
 
     @Test
@@ -32,13 +30,11 @@ class MemberRepositoryTest {
         Member member1 = new Member();
         member1.setName("ya ong");
         member1.setMemberId("testMan");
-        member1.setEmail("lion@naver.com");
         member1.setPassword("123");
 
         Member member2 = new Member();
         member2.setName("ya ong2");
         member2.setMemberId("testMan2");
-        member2.setEmail("like@naver.com");
         member2.setPassword("1234");
         memberRepository.save(member1);
         memberRepository.save(member2);
@@ -50,7 +46,6 @@ class MemberRepositoryTest {
         Assertions.assertThat(result.get()).isEqualTo(member1);
         Assertions.assertThat(result.get()).isEqualTo(member2);
         Assertions.assertThat(result.get().getName()).isEqualTo(member2.getName());
-        Assertions.assertThat(result.get().getEmail()).isEqualTo(member2.getEmail());
     }
 
 }

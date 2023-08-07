@@ -19,11 +19,10 @@ public class MemberRepository {
     public static MemberRepository getInstance(){
         return instance;
     }
-    private MemberRepository(){
-    }
     public Member save(Member member){
         member.setId(++sequence);
         store.put(member.getId(),member);
+        log.info("멤버 저장 됨 {}",member.getId());
         return member;
     }
 
