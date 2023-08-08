@@ -18,7 +18,7 @@ public class Member {
     private Long id;
 
     @NotEmpty
-    @Column(length = 15)
+    @Column(length = 30)
     private String memberId;
 
     @Column(length = 10)
