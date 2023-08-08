@@ -29,13 +29,13 @@ public class MemberService {
     }
 
     public SignUpResult save(SignUpDto memberDto){
-        if(memberJpaRepository.findMemberByMemberId(memberDto.getMemberId()).isEmpty()){
+        if(!memberJpaRepository.findMemberByMemberId(memberDto.getMemberId()).isEmpty()){
             return new SignUpResult("duplicatedId");
         }
         if(!isValidEmail(memberDto.getMemberId())){
             return new SignUpResult("idValidation");
         }
-        if(memberDto.getPassWord().equals(memberDto.getCheckPassWord())){
+        if(!memberDto.getPassWord().equals(memberDto.getCheckPassWord())){
             return new SignUpResult("pwValidation");
         }
 
