@@ -1,12 +1,16 @@
 package likelion.running.domain.member;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@Data
+
+@Getter
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -20,12 +24,4 @@ public class Member {
     @Column(length = 10)
     private String name;
     private String password;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

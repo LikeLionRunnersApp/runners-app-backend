@@ -1,8 +1,6 @@
-package likelion.running.dto.memberDto;
+package likelion.running.web.dto.memberDto;
 
-import com.sun.istack.NotNull;
 import lombok.Data;
-
 @Data
 public class MemberDto {
 
@@ -11,6 +9,6 @@ public class MemberDto {
     private String passWord;
 
     private String checkPassWord;
-    
+
     private String name;
 }
