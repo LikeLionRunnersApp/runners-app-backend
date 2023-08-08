@@ -1,12 +1,16 @@
 package likelion.running.service;
 
-import likelion.running.domain.login.SignUpResult;
+import likelion.running.domain.signUp.SignUpResult;
 import likelion.running.domain.member.Member;
 import likelion.running.domain.member.MemberJpaRepository;
-import likelion.running.web.dto.memberDto.MemberDto;
+import likelion.running.web.dto.memberDto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +28,7 @@ public class MemberService {
         this.memberJpaRepository = memberJpaRepository;
     }
 
-    public SignUpResult save(MemberDto memberDto){
+    public SignUpResult save(SignUpDto memberDto){
         if(memberJpaRepository.findMemberByMemberId(memberDto.getMemberId()).isEmpty()){
             return new SignUpResult("duplicatedId");
         }
@@ -53,8 +57,12 @@ public class MemberService {
         return memberJpaRepository.findMemberByMemberId(name);
     }
 
+//    public List<Member> findAll(){
+//
+//    }
     public boolean isValidEmail(String email) {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
 }
