@@ -1,19 +1,22 @@
 package likelion.running.domain.board;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
-@Data
+@Getter
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long hostId;
+
+    private String hostId;
 
     @Column(length = 100)
     private String title;
@@ -29,11 +32,7 @@ public class Board {
     private String walkTime;
     private int fullTime;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private int joinMember;
+    private int totalMember;
 
-    public Long getId() {
-        return id;
-    }
 }

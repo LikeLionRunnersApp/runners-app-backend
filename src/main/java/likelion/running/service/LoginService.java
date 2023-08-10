@@ -4,6 +4,7 @@ import likelion.running.domain.member.Member;
 import likelion.running.domain.member.MemberJpaRepository;
 import likelion.running.web.dto.memberDto.LoginDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class LoginService {
 
     private final MemberJpaRepository memberJpaRepository;
-
+    @Autowired
     public LoginService(MemberJpaRepository memberJpaRepository) {
         this.memberJpaRepository = memberJpaRepository;
     }
