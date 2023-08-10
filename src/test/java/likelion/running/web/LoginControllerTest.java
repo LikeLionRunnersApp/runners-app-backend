@@ -1,12 +1,10 @@
 package likelion.running.web;
 
 import likelion.running.domain.member.Member;
-import likelion.running.domain.member.MemberJpaRepository;
 import likelion.running.domain.signUp.SignUpResult;
 import likelion.running.service.LoginService;
 import likelion.running.service.MemberService;
 import likelion.running.web.dto.memberDto.LoginDto;
-import likelion.running.web.dto.memberDto.MemberDto;
 import likelion.running.web.dto.memberDto.SignUpDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -29,7 +29,8 @@ public class MemberService {
     }
 
     public SignUpResult save(SignUpDto memberDto){
-        if(!memberJpaRepository.findMemberByMemberId(memberDto.getMemberId()).isEmpty()){
+
+        if(memberJpaRepository.findMemberByMemberId(memberDto.getMemberId()).isPresent()){
             return new SignUpResult("duplicatedId");
         }
         if(!isValidEmail(memberDto.getMemberId())){
@@ -57,9 +58,6 @@ public class MemberService {
         return memberJpaRepository.findMemberByMemberId(name);
     }
 
-//    public List<Member> findAll(){
-//
-//    }
     public boolean isValidEmail(String email) {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

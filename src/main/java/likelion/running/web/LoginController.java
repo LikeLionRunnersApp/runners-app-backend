@@ -1,5 +1,6 @@
 package likelion.running.web;
 
+import likelion.running.SessionConst;
 import likelion.running.domain.member.Member;
 import likelion.running.domain.signUp.SignUpResult;
 import likelion.running.service.LoginService;
@@ -8,12 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -22,7 +21,7 @@ import java.util.Optional;
 @RestController
 public class LoginController {
 
-    LoginService loginService;
+    private final LoginService loginService;
     @Autowired
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
@@ -31,6 +30,7 @@ public class LoginController {
     @PostMapping("/login")
     public SignUpResult login(@Validated @RequestBody LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
+            log.info(bindingResult.toString());
             return new SignUpResult("emptyBox");
         }
 
@@ -53,7 +53,5 @@ public class LoginController {
         }
         return new SignUpResult("logout");
     }
-
-
 
 }
