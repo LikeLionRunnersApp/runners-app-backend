@@ -40,6 +40,13 @@ public class BoardService {
         return boardJpaRepository.findBoardById(boardId);
     }
 
+    public Long findByHostId(String hostId){
+        Optional<Board> board = boardJpaRepository.findBoardByHostId(hostId);
+
+        board.ifPresent(value -> log.info(String.valueOf(value.getId())));
+
+        return board.map(Board::getId).orElse(null);
+    }
     public String removeBoard(Long boardId){
         boardJpaRepository.deleteById(boardId);
         return "ok";

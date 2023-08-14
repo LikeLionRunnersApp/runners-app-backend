@@ -1,11 +1,13 @@
 package likelion.running.web.dto.boardDto;
 
 import likelion.running.domain.member.Member;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Builder
 public class BoardForm {
 
     private String hostId;

@@ -19,8 +19,7 @@ class BoardControllerTest {
     @Test
     public void openRun(){
         //given
-        BoardForm board = new BoardForm();
-        board.setTitle("test");
+        BoardForm board = BoardForm.builder().title("test").build();
         //when
         Optional<Board> result = boardService.openRunning(board);
         //then
@@ -31,10 +30,10 @@ class BoardControllerTest {
     @Test
     public void findBoard(){
         //given
-        BoardForm b1 = new BoardForm();
-        b1.setTitle("mooyaho");
-        b1.setHostId("test1@naver.com");
-
+        BoardForm b1 = BoardForm.builder()
+                .title("mooyaho")
+                .hostId("test1@naver.com")
+                .build();
         Optional<Board> board = boardService.openRunning(b1);
         Assertions.assertThat(board).isPresent();
 
@@ -50,10 +49,10 @@ class BoardControllerTest {
     @Test
     public void deleteBoard(){
         //given
-        BoardForm b1 = new BoardForm();
-
-        b1.setTitle("mooyaho");
-        b1.setHostId("test1@naver.com");
+        BoardForm b1 = BoardForm.builder()
+                .title("mooyaho")
+                .hostId("test1@naver.com")
+                .build();
 
         Optional<Board> board1 = boardService.openRunning(b1);
         //when
@@ -68,9 +67,11 @@ class BoardControllerTest {
     @Test
     public void updateBoard(){
         //given
-        BoardForm b1 = new BoardForm();
-        b1.setHostId("test1@naver.com");
-        b1.setTitle("mooyaho");
+        BoardForm b1 = BoardForm.builder()
+                .hostId("test1@naver.com")
+                .title("mooyaho")
+                .build();
+
         Optional<Board> board = boardService.openRunning(b1);
         Assertions.assertThat(board).isPresent();
         EditBoardDto build = EditBoardDto.builder().title("test")
