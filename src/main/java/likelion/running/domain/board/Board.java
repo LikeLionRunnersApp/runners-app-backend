@@ -1,8 +1,11 @@
 package likelion.running.domain.board;
 
+import likelion.running.domain.member.Member;
+import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Getter
@@ -35,4 +38,28 @@ public class Board {
     private int joinMember;
     private int totalMember;
 
+    public EditBoardDto.EditBoardDtoBuilder toEditor(){
+        return EditBoardDto.builder()
+                .title(title)
+                .content(content)
+                .runningType(runningType)
+                .place(place)
+                .runTime(runTime)
+                .walkTime(walkTime)
+                .time(time)
+                .totalMember(totalMember)
+                .fullTime(fullTime);
+    }
+
+    public void edit(EditBoardDto editBoardDto){
+        title = editBoardDto.getTitle();
+        content = editBoardDto.getContent();
+        runningType = editBoardDto.getRunningType();
+        place = editBoardDto.getPlace();
+        runTime = editBoardDto.getRunTime();
+        walkTime = editBoardDto.getWalkTime();
+        time = editBoardDto.getTime();
+        totalMember = editBoardDto.getTotalMember();
+        fullTime = editBoardDto.getFullTime();
+    }
 }

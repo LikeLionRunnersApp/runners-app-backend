@@ -3,9 +3,12 @@ package likelion.running.service;
 import likelion.running.domain.board.Board;
 import likelion.running.domain.board.BoardJpaRepository;
 import likelion.running.web.dto.boardDto.BoardForm;
+import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Slf4j
@@ -29,8 +32,38 @@ public class BoardService {
                 .walkTime(boardForm.getWalkTime())
                 .fullTime(boardForm.getFullTime())
                 .build());
-        log.info("board 생성 {}",board);
+        log.info("board 생성 {}",board.getTitle());
         return Optional.of(board);
     }
+
+    public Optional<Board> findByBoardId(Long boardId){
+        return boardJpaRepository.findBoardById(boardId);
+    }
+
+    public String removeBoard(Long boardId){
+        boardJpaRepository.deleteById(boardId);
+        return "ok";
+    }
+
+    @Transactional
+    public String editBoard(Long boardId, EditBoardDto editBoardDto){
+        Board board = boardJpaRepository.findBoardById(boardId).orElseThrow();
+        EditBoardDto.EditBoardDtoBuilder exist = board.toEditor();
+        EditBoardDto editNew = exist.title(editBoardDto.getTitle())
+                .content(editBoardDto.getContent())
+                .runningType(editBoardDto.getRunningType())
+                .place(editBoardDto.getPlace())
+                .runTime(editBoardDto.getRunTime())
+                .walkTime(editBoardDto.getWalkTime())
+                .time(editBoardDto.getTime())
+                .totalMember(editBoardDto.getTotalMember())
+                .fullTime(editBoardDto.getFullTime())
+                .build();
+        board.edit(editNew);
+        log.info("board title {}", board.getTitle());
+        log.info("board content {}", board.getContent());
+        return "ok";
+    }
+
 
 }
