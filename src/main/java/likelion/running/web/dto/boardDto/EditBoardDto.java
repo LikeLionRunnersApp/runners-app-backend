@@ -1,23 +1,32 @@
 package likelion.running.web.dto.boardDto;
 
-import likelion.running.domain.member.Member;
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+
 
 @Data
-public class BoardForm {
+@Builder
+public class EditBoardDto {
 
-    private String hostId;
+    @NotBlank
     private String title;
+    @NotBlank
     private String content;
+    @NotBlank
     private String place;
-
-    private List<Member> guest;
+    @NotBlank
     private String runningType;
-
+    @NotBlank
     private String runTime;
+    @NotBlank
     private String walkTime;
-    private int fullTime;
+    @NotBlank
+    private String time;
+
     private int totalMember;
+
+    private int fullTime;
+
 }
