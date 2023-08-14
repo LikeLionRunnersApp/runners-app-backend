@@ -3,7 +3,6 @@ package likelion.running.domain.board;
 import likelion.running.domain.member.Member;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 

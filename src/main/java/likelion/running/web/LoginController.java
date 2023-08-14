@@ -47,7 +47,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     public SignUpResult logout(HttpServletRequest request){
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if(session!=null){
             session.invalidate();
         }

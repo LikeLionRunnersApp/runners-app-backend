@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface BoardJpaRepository extends JpaRepository<Board,Long> {
     Optional<Board> findBoardById(Long boardId);
+    Optional<Board> findBoardByHostId(String hostId);
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class MemberDto {
-    Long id;
+    String hostId;
     String name;
 }
