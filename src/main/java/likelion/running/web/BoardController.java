@@ -2,7 +2,6 @@ package likelion.running.web;
 
 import likelion.running.domain.board.Board;
 import likelion.running.service.BoardService;
-import likelion.running.service.GuestService;
 import likelion.running.web.dto.boardDto.BoardForm;
 
 import likelion.running.web.dto.boardDto.EditBoardDto;
@@ -18,11 +17,9 @@ import java.util.Optional;
 public class BoardController {
 
     private final BoardService boardService;
-    private final GuestService guestService;
     @Autowired
-    public BoardController(BoardService boardService, GuestService guestService) {
+    public BoardController(BoardService boardService) {
         this.boardService = boardService;
-        this.guestService = guestService;
     }
 
     @PostMapping("/board")
