@@ -78,7 +78,7 @@ class BoardControllerTest {
         EditBoardDto build = EditBoardDto.builder().title("test")
                 .content("test start")
                 .place("korea")
-                .flag(FlagType.interval)
+                .flag(FlagType.INTERVAL)
                 .runTime("3")
                 .walkTime("1")
                 .time("2023-08-14")
