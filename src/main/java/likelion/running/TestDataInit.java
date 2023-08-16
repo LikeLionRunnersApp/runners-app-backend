@@ -2,6 +2,8 @@ package likelion.running;
 
 import likelion.running.domain.board.Board;
 import likelion.running.domain.board.BoardJpaRepository;
+import likelion.running.domain.board.BoardStatus;
+import likelion.running.domain.board.FlagType;
 import likelion.running.domain.member.Member;
 import likelion.running.domain.member.MemberJpaRepository;
 import likelion.running.service.GuestService;
@@ -22,7 +24,7 @@ public class TestDataInit {
     @PostConstruct
     public void init(){
         Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test", "12345"));
-        Board board = boardJpaRepository.save(new Board(1L,"test@test.com","ttt","contentttt","work","daejeon","10:30","1","2",20,5,5));
+        Board board = boardJpaRepository.save(new Board(1L,"test@test.com","ttt","contentttt", FlagType.WALK,"daejeon","10:30","1","2",20,5,5, BoardStatus.START));
         log.info("test {}",test.toString());
         log.info("test board {}",board.toString());
         GuestDto build1 = GuestDto.builder().boardId(board.getId()).participate(true).memberId("ttt@tttt.com").build();

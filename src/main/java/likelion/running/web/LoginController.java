@@ -36,11 +36,14 @@ public class LoginController {
 
         Optional<Member> member = loginService.login(loginDto);
         log.info("login {}",member);
+
         if(member.isEmpty()){
             return new SignUpResult("loginFail");
         }
+
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER,member);
+        session.setMaxInactiveInterval(1800);
 
         return new SignUpResult("true");
     }
@@ -48,9 +51,11 @@ public class LoginController {
     @PostMapping("/logout")
     public SignUpResult logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
+
         if(session!=null){
             session.invalidate();
         }
+
         return new SignUpResult("logout");
     }
 

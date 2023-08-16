@@ -1,6 +1,7 @@
 package likelion.running.web;
 
 import likelion.running.domain.board.Board;
+import likelion.running.domain.board.FlagType;
 import likelion.running.service.BoardService;
 import likelion.running.web.dto.boardDto.BoardForm;
 import likelion.running.web.dto.boardDto.EditBoardDto;
@@ -77,12 +78,12 @@ class BoardControllerTest {
         EditBoardDto build = EditBoardDto.builder().title("test")
                 .content("test start")
                 .place("korea")
-                .runningType("interval")
+                .flag(FlagType.interval)
                 .runTime("3")
                 .walkTime("1")
                 .time("2023-08-14")
                 .totalMember(6)
-                .fullTime(40)
+                .play_time(40)
                 .build();
         Assertions.assertThat(board).isPresent();
         Long id = board.get().getId();
