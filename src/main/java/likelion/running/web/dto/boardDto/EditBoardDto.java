@@ -1,23 +1,27 @@
 package likelion.running.web.dto.boardDto;
 
+import likelion.running.domain.board.BoardStatus;
+import likelion.running.domain.board.FlagType;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 
 @Data
 @Builder
 public class EditBoardDto {
 
+    private String memberId;
     @NotBlank
     private String title;
     @NotBlank
     private String content;
     @NotBlank
     private String place;
-    @NotBlank
-    private String runningType;
+
+    private FlagType flag;
     @NotBlank
     private String runTime;
     @NotBlank
@@ -27,6 +31,7 @@ public class EditBoardDto {
 
     private int totalMember;
 
-    private int fullTime;
+    private int play_time;
 
+    private BoardStatus status;
 }

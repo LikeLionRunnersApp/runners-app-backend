@@ -27,10 +27,11 @@ public class BoardService {
                 .title(boardForm.getTitle())
                 .content(boardForm.getContent())
                 .totalMember(boardForm.getTotalMember())
-                .runningType(boardForm.getRunningType())
+                .flag(boardForm.getFlag())
                 .runTime(boardForm.getRunTime())
                 .walkTime(boardForm.getWalkTime())
-                .fullTime(boardForm.getFullTime())
+                .play_time(boardForm.getPlay_time())
+                .status(boardForm.getStatus())
                 .build());
         log.info("board 생성 {}",board.getTitle());
         return Optional.of(board);
@@ -42,7 +43,6 @@ public class BoardService {
 
     public Long findByHostId(String hostId){
         Optional<Board> board = boardJpaRepository.findBoardByHostId(hostId);
-
         board.ifPresent(value -> log.info(String.valueOf(value.getId())));
 
         return board.map(Board::getId).orElse(null);
@@ -58,19 +58,19 @@ public class BoardService {
         EditBoardDto.EditBoardDtoBuilder exist = board.toEditor();
         EditBoardDto editNew = exist.title(editBoardDto.getTitle())
                 .content(editBoardDto.getContent())
-                .runningType(editBoardDto.getRunningType())
+                .flag(editBoardDto.getFlag())
                 .place(editBoardDto.getPlace())
                 .runTime(editBoardDto.getRunTime())
                 .walkTime(editBoardDto.getWalkTime())
                 .time(editBoardDto.getTime())
                 .totalMember(editBoardDto.getTotalMember())
-                .fullTime(editBoardDto.getFullTime())
+                .play_time(editBoardDto.getPlay_time())
+                .status(editBoardDto.getStatus())
                 .build();
         board.edit(editNew);
         log.info("board title {}", board.getTitle());
         log.info("board content {}", board.getContent());
         return "ok";
     }
-
 
 }

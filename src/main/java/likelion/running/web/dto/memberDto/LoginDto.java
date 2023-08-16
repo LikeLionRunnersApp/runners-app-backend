@@ -15,7 +15,7 @@ public class LoginDto {
     String memberId;
 
     @NotEmpty
-    @Size(min = 5, message = "비밀번호는 최소 5자 이상이어야 합니다.")
+    @Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
     String password;
 
 }

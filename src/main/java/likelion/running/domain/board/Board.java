@@ -1,10 +1,8 @@
 package likelion.running.domain.board;
 
-import likelion.running.domain.member.Member;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.*;
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
@@ -25,40 +23,43 @@ public class Board {
 
     @Column(length = 500)
     private String content;
-    private String runningType;
+    private FlagType flag;
 
     private String place;
 
     private String time;
     private String runTime;
     private String walkTime;
-    private int fullTime;
+    private int play_time;
 
     private int joinMember;
     private int totalMember;
 
+    private BoardStatus status;
     public EditBoardDto.EditBoardDtoBuilder toEditor(){
         return EditBoardDto.builder()
                 .title(title)
                 .content(content)
-                .runningType(runningType)
                 .place(place)
                 .runTime(runTime)
                 .walkTime(walkTime)
                 .time(time)
                 .totalMember(totalMember)
-                .fullTime(fullTime);
+                .status(status)
+                .flag(flag)
+                .play_time(play_time);
     }
 
     public void edit(EditBoardDto editBoardDto){
         title = editBoardDto.getTitle();
         content = editBoardDto.getContent();
-        runningType = editBoardDto.getRunningType();
+        flag = editBoardDto.getFlag();
         place = editBoardDto.getPlace();
         runTime = editBoardDto.getRunTime();
         walkTime = editBoardDto.getWalkTime();
         time = editBoardDto.getTime();
         totalMember = editBoardDto.getTotalMember();
-        fullTime = editBoardDto.getFullTime();
+        play_time = editBoardDto.getPlay_time();
+        status = editBoardDto.getStatus();
     }
 }

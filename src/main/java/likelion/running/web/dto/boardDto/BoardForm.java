@@ -1,5 +1,7 @@
 package likelion.running.web.dto.boardDto;
 
+import likelion.running.domain.board.BoardStatus;
+import likelion.running.domain.board.FlagType;
 import likelion.running.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +18,11 @@ public class BoardForm {
     private String place;
 
     private List<Member> guest;
-    private String runningType;
+    private FlagType flag;
 
     private String runTime;
     private String walkTime;
-    private int fullTime;
+    private int play_time;
     private int totalMember;
+    private BoardStatus status;
 }
