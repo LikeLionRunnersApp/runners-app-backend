@@ -2,7 +2,6 @@ package likelion.running.service;
 
 import likelion.running.domain.guest.Guest;
 import likelion.running.domain.guest.GuestJpaRepository;
-import likelion.running.web.dto.boardDto.EditBoardDto;
 import likelion.running.web.dto.memberDto.GuestDto;
 import likelion.running.web.dto.memberDto.MemberDto;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
