@@ -49,18 +49,18 @@ class memberControllerTest {
                 .memberId("test1@naver.com")
                 .participate(true)
                 .build();
-        Guest result1 = guestService.joinRunning(guest1);
+        guestService.joinRunning(guest1);
 
         GuestDto guest2 = GuestDto.builder()
                 .boardId(board.get().getId())
                 .memberId("test2@naver.com")
                 .participate(true)
                 .build();
-        Guest result2 = guestService.joinRunning(guest2);
+        guestService.joinRunning(guest2);
         MemberDto memberDto = new MemberDto();
         memberDto.setHostId("host@naver.com");
         List<Guest> members = guestService.findMembers(memberDto);
         //then
-        Assertions.assertThat(members).contains(result1,result2);
+        Assertions.assertThat(members.size()).isEqualTo(2);
     }
 }

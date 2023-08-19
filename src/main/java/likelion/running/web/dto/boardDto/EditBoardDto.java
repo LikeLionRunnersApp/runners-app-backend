@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -26,7 +26,7 @@ public class EditBoardDto {
     @NotBlank
     private String walkTime;
     @NotBlank
-    private String time;
+    private LocalDate time;
 
     private int totalMember;
 

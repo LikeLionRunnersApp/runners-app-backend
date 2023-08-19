@@ -3,13 +3,14 @@ package likelion.running.domain.board;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.*;
 import javax.persistence.*;
-
+import java.time.LocalDate;
 
 @Getter
 @Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Board {
 
     @Id
@@ -27,7 +28,7 @@ public class Board {
 
     private String place;
 
-    private String time;
+    private LocalDate time;
     private String runTime;
     private String walkTime;
     private int play_time;
@@ -61,5 +62,9 @@ public class Board {
         totalMember = editBoardDto.getTotalMember();
         play_time = editBoardDto.getPlay_time();
         status = editBoardDto.getStatus();
+    }
+
+    public void increase(){
+        joinMember++;
     }
 }

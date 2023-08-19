@@ -2,23 +2,29 @@ package likelion.running.service;
 
 import likelion.running.domain.board.Board;
 import likelion.running.domain.board.BoardJpaRepository;
+import likelion.running.domain.guest.Guest;
+import likelion.running.domain.guest.GuestJpaRepository;
 import likelion.running.web.dto.boardDto.BoardForm;
 import likelion.running.web.dto.boardDto.EditBoardDto;
+import likelion.running.web.dto.memberDto.GuestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Slf4j
 @Service
 public class BoardService {
 
     private final BoardJpaRepository boardJpaRepository;
+    private final GuestJpaRepository guestJpaRepository;
     @Autowired
-    public BoardService(BoardJpaRepository boardJpaRepository) {
+    public BoardService(BoardJpaRepository boardJpaRepository, GuestJpaRepository guestJpaRepository) {
         this.boardJpaRepository = boardJpaRepository;
+        this.guestJpaRepository = guestJpaRepository;
     }
 
     public Optional<Board> openRunning(BoardForm boardForm){
@@ -32,6 +38,7 @@ public class BoardService {
                 .walkTime(boardForm.getWalkTime())
                 .play_time(boardForm.getPlay_time())
                 .status(boardForm.getStatus())
+                .time(boardForm.getTime())
                 .build());
         log.info("board 생성 {}",board.getTitle());
         return Optional.of(board);
@@ -47,13 +54,47 @@ public class BoardService {
 
         return board.map(Board::getId).orElse(null);
     }
+
+    public List<Board> findAllBoardByTime(LocalDate date){
+        return boardJpaRepository.findAllByTime(date);
+    }
+
+    public List<Board> findAllBoardByMemberId(String memberId){
+
+        List<Board> boards = boardJpaRepository.findByHostId(memberId);
+        List<Guest> guests = guestJpaRepository.findByGuestId(memberId);
+
+        List<Board> list = new ArrayList<>();
+        for (Board board : boards) {
+            log.info(String.valueOf(board.getId()));
+            if(board.getTime()!=null){
+                list.add(board);
+            }
+        }
+        log.info(String.valueOf(boards.isEmpty()));
+
+        for (Guest guest : guests) {
+            Optional<Board> board = boardJpaRepository.findBoardById(guest.getBoardId());
+            log.info(guest.getGuestId());
+            board.ifPresent(value-> {
+                if(value.getTime()!=null)
+                    list.add(value);
+            });
+        }
+
+        Comparator<Board> comparator = Comparator.comparing(Board::getTime,Comparator.nullsLast(Comparator.naturalOrder()));
+        list.sort(comparator);
+
+        return list;
+    }
+
     public String removeBoard(Long boardId){
         boardJpaRepository.deleteById(boardId);
         return "ok";
     }
 
     @Transactional
-    public String editBoard(Long boardId, EditBoardDto editBoardDto){
+    public boolean editBoard(Long boardId, EditBoardDto editBoardDto){
         Board board = boardJpaRepository.findBoardById(boardId).orElseThrow();
         EditBoardDto.EditBoardDtoBuilder exist = board.toEditor();
         EditBoardDto editNew = exist.title(editBoardDto.getTitle())
@@ -70,7 +111,12 @@ public class BoardService {
         board.edit(editNew);
         log.info("board title {}", board.getTitle());
         log.info("board content {}", board.getContent());
-        return "ok";
+        return true;
     }
 
+    public void increaseMember(GuestDto guestDto){
+        Optional<Board> board = boardJpaRepository.findBoardById(guestDto.getBoardId());
+        board.ifPresent(Board::increase);
+        board.ifPresent(boardJpaRepository::save);
+    }
 }
