@@ -6,6 +6,7 @@ import likelion.running.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -20,6 +21,7 @@ public class BoardForm {
     private List<Member> guest;
     private FlagType flag;
 
+    private LocalDate time;
     private String runTime;
     private String walkTime;
     private int play_time;

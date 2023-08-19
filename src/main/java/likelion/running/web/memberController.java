@@ -1,6 +1,7 @@
 package likelion.running.web;
 
 import likelion.running.domain.guest.Guest;
+import likelion.running.domain.participate.ParticipateResult;
 import likelion.running.domain.signUp.SignUpResult;
 import likelion.running.service.GuestService;
 import likelion.running.service.MemberService;
@@ -48,9 +49,8 @@ public class memberController {
     }
 
     @PostMapping("/participate")
-    public String participate(@RequestBody GuestDto guestDto){
-        guestService.joinRunning(guestDto);
-        return "ok";
+    public ParticipateResult participate(@RequestBody GuestDto guestDto){
+        return guestService.joinRunning(guestDto);
     }
 
 }
