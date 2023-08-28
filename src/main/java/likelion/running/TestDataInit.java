@@ -1,9 +1,7 @@
 package likelion.running;
 
 import likelion.running.domain.board.Board;
-import likelion.running.domain.board.BoardJpaRepository;
-import likelion.running.domain.board.BoardStatus;
-import likelion.running.domain.board.FlagType;
+import likelion.running.domain.member.Authority;
 import likelion.running.domain.member.Member;
 import likelion.running.domain.member.MemberJpaRepository;
 import likelion.running.service.BoardService;
@@ -12,11 +10,14 @@ import likelion.running.web.dto.boardDto.BoardForm;
 import likelion.running.web.dto.memberDto.GuestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -25,9 +26,14 @@ public class TestDataInit {
     private final MemberJpaRepository memberJpaRepository;
     private final GuestService guestService;
     private final BoardService boardService;
+    private final PasswordEncoder passwordEncoder;
+    Set<Authority> set = new HashSet<>();
     @PostConstruct
     public void init(){
-        Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test", "12345"));
+        /*set.add(Authority.builder()
+                .authorityName("ROLE_USER")
+                .build());*/
+        Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test", passwordEncoder.encode("123456789"),true,set));
         Optional<Board> board1 = boardService.openRunning(BoardForm.builder()
                         .hostId("test@test.com")
                         .title("tttt")

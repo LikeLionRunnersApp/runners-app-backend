@@ -34,12 +34,12 @@ public class memberController {
     }
 
     @PostMapping("/sign-up")
-    public SignUpResult signUp(@Validated @RequestBody SignUpDto signUpDto, BindingResult bindingResult, HttpServletRequest request){
+    public SignUpResult signUp(@Validated @RequestBody SignUpDto signUpDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             //검증 부분 설정 필요
             log.info("아이디 혹은 비밀번호를 잘못입력했습니다.");
         }
-        return memberService.save(signUpDto);
+        return memberService.signUp(signUpDto);
     }
 
     @GetMapping("/members")
