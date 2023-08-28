@@ -1,12 +1,15 @@
 package likelion.running.web.dto.memberDto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
+@Builder
 public class SignUpDto {
 
     @NotEmpty
@@ -25,4 +28,17 @@ public class SignUpDto {
     @NotEmpty
     @Size(max = 10)
     private String name;
+
+    private Set<AuthorityDto> authorityDtoSet;
+    /*public static SignUpDto from(Member member){
+        if(member == null) return null;
+
+        return SignUpDto.builder()
+                .memberId(member.getMemberId())
+                .name(member.getName())
+                .authorityDtoSet(member.getAuthorities().stream()
+                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
+                        .collect(Collectors.toSet()))
+                .build();
+    }*/
 }
