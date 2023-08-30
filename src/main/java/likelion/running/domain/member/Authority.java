@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -21,4 +20,7 @@ public class Authority {
     @Id
     @Column(name = "authority_name", length = 50)
     private String authorityName;
+
+    @OneToMany(mappedBy = "authority")
+    private Set<MemberAuthority> memberAuthorities = new HashSet<>();
 }

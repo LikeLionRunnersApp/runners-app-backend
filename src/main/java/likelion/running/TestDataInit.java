@@ -1,9 +1,7 @@
 package likelion.running;
 
 import likelion.running.domain.board.Board;
-import likelion.running.domain.member.Authority;
-import likelion.running.domain.member.Member;
-import likelion.running.domain.member.MemberJpaRepository;
+import likelion.running.domain.member.*;
 import likelion.running.service.BoardService;
 import likelion.running.service.GuestService;
 import likelion.running.web.dto.boardDto.BoardForm;
@@ -27,25 +25,29 @@ public class TestDataInit {
     private final GuestService guestService;
     private final BoardService boardService;
     private final PasswordEncoder passwordEncoder;
-    Set<Authority> set = new HashSet<>();
+    private final MemberAuthorityJpaRepository memberAuthorityJpaRepository;
+    private final AuthorityJpaRepository authorityJpaRepository;
+    Set<MemberAuthority> set = new HashSet<>();
     @PostConstruct
     public void init(){
-        /*set.add(Authority.builder()
-                .authorityName("ROLE_USER")
-                .build());*/
+
+
         Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test", passwordEncoder.encode("123456789"),true,set));
+
         Optional<Board> board1 = boardService.openRunning(BoardForm.builder()
                         .hostId("test@test.com")
                         .title("tttt")
                         .totalMember(10)
                         .time(LocalDate.of(2023,8,17))
                 .build());
+
         Optional<Board> board2 = boardService.openRunning(BoardForm.builder()
                 .hostId("test@test.com")
                 .title("tttt")
                 .totalMember(10)
                 .time(LocalDate.of(2023,8,16))
                 .build());
+
         Optional<Board> board3 = boardService.openRunning(BoardForm.builder()
                 .hostId("test@test.com")
                 .title("tttt")
@@ -55,9 +57,19 @@ public class TestDataInit {
 
         log.info("test {}",test);
         log.info("test board {}",board1);
+
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test2@test.com")
                 .boardId(board1.get().getId())
                 .build());
+        guestService.joinRunning(GuestDto.builder()
+                .memberId("test3@test.com")
+                .boardId(board1.get().getId())
+                .build());
+        guestService.joinRunning(GuestDto.builder()
+                .memberId("test4@test.com")
+                .boardId(board1.get().getId())
+                .build());
+
     }
 }

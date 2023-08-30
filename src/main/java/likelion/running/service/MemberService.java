@@ -1,9 +1,7 @@
 package likelion.running.service;
 
-import likelion.running.domain.member.Authority;
+import likelion.running.domain.member.*;
 import likelion.running.domain.signUp.SignUpResult;
-import likelion.running.domain.member.Member;
-import likelion.running.domain.member.MemberJpaRepository;
 import likelion.running.web.dto.memberDto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,12 +21,14 @@ import java.util.regex.Pattern;
 public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;//멤버 저장소
+    private final MemberAuthorityJpaRepository memberAuthorityJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     @Autowired
-    public MemberService(MemberJpaRepository memberJpaRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberJpaRepository memberJpaRepository, MemberAuthorityJpaRepository memberAuthorityJpaRepository, PasswordEncoder passwordEncoder) {
         this.memberJpaRepository = memberJpaRepository;
+        this.memberAuthorityJpaRepository = memberAuthorityJpaRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -43,21 +43,32 @@ public class MemberService {
         if(!memberDto.getPassWord().equals(memberDto.getCheckPassWord())){
             return new SignUpResult("pwValidation");
         }
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
                 .name(memberDto.getName())
                 .password(passwordEncoder.encode(memberDto.getPassWord()))
-                .authorities(Collections.singleton(authority))
+                .authorities(new HashSet<>())
                 .activated(true)
                 .build();
+
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
+
+        MemberAuthority memberAuthority = MemberAuthority.builder()
+                .member(member)
+                .authority(authority)
+                .build();
+
+        member.getAuthorities().add(memberAuthority);
+
         log.info(member.getMemberId());
+        memberAuthorityJpaRepository.save(memberAuthority);
         Member save = memberJpaRepository.save(member);
         log.info("멤버 저장 됨 {}",save.getId());
         log.info(save.getPassword());
+
         return new SignUpResult("true");
     }
 
@@ -74,4 +85,8 @@ public class MemberService {
         return matcher.matches();
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Member> getMemberWithAuthorities(String memberId){
+        return memberJpaRepository.findOneWithAuthoritiesByMemberId(memberId);
+    }
 }
