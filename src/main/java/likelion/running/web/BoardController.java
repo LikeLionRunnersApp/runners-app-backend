@@ -8,8 +8,10 @@ import likelion.running.web.dto.boardDto.BoardForm;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/{boardId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public String deleteBoard(@PathVariable Long boardId){
         log.info("delete 시도 {}",boardId);
         return boardService.removeBoard(boardId);

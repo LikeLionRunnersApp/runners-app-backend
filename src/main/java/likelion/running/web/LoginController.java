@@ -44,8 +44,10 @@ public class LoginController {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getMemberId(),loginDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info("authentication = {}",authentication.getName());
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        log.info(SecurityContextHolder.getContext().getAuthentication().getName());
         String jwt = tokenProvider.createToken(authentication);
 
         HttpHeaders httpHeaders = new HttpHeaders();
