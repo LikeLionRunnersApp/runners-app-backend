@@ -3,8 +3,7 @@ package likelion.running.web.dto.memberDto;
 import lombok.Data;
 
 @Data
-public class MemberDto {
+public class AuthDto {
     String memberId;
-    String name;
-    String phoneNum;
+    String authCode;
 }

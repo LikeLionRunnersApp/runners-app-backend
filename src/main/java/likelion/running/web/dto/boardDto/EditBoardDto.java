@@ -25,8 +25,10 @@ public class EditBoardDto {
     private String runTime;
     @NotBlank
     private String walkTime;
-    @NotBlank
+
     private LocalDate time;
+
+    private int repeat;
 
     private int totalMember;
 

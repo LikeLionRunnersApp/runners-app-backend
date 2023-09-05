@@ -32,19 +32,21 @@ public class Board {
     private String runTime;
     private String walkTime;
     private int play_time;
-
+    private int repeat;
     private int joinMember;
     private int totalMember;
 
     private BoardStatus status;
     public EditBoardDto.EditBoardDtoBuilder toEditor(){
         return EditBoardDto.builder()
+                .memberId(hostId)
                 .title(title)
                 .content(content)
                 .place(place)
                 .runTime(runTime)
                 .walkTime(walkTime)
                 .time(time)
+                .repeat(repeat)
                 .totalMember(totalMember)
                 .status(status)
                 .flag(flag)
@@ -59,6 +61,7 @@ public class Board {
         runTime = editBoardDto.getRunTime();
         walkTime = editBoardDto.getWalkTime();
         time = editBoardDto.getTime();
+        repeat = editBoardDto.getRepeat();
         totalMember = editBoardDto.getTotalMember();
         play_time = editBoardDto.getPlay_time();
         status = editBoardDto.getStatus();

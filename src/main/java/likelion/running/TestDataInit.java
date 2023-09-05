@@ -32,7 +32,7 @@ public class TestDataInit {
     public void init(){
 
 
-        Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test", passwordEncoder.encode("123456789"),true,set));
+        Member test = memberJpaRepository.save(new Member(1L, "test@test.com", "test","010-0000-0000", passwordEncoder.encode("123456789"),true,set,""));
 
         Optional<Board> board1 = boardService.openRunning(BoardForm.builder()
                         .hostId("test@test.com")

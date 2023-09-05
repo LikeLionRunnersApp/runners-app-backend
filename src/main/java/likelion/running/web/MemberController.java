@@ -17,18 +17,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
 @RestController
-public class memberController {
+public class MemberController {
 
     private final MemberService memberService;
     private final GuestService guestService;
 
     @Autowired
-    public memberController(MemberService memberService, GuestService guestService) {
+    public MemberController(MemberService memberService, GuestService guestService) {
         this.memberService = memberService;
         this.guestService = guestService;
     }

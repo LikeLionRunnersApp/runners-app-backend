@@ -51,7 +51,7 @@ public class GuestService {
     }
     public List<Guest> findMembers(MemberDto memberDto){
         log.info(memberDto.toString());
-        Long boardId = boardService.findByHostId(memberDto.getHostId());
+        Long boardId = boardService.findByHostId(memberDto.getMemberId());
         log.info("boardId = {}",boardId);
         return guestJpaRepository.findAllByBoardId(boardId);
     }

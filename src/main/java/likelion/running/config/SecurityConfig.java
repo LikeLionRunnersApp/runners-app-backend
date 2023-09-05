@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/login"), new AntPathRequestMatcher("/sign-up")).permitAll()
-                        .antMatchers("/board").permitAll()
+                        .antMatchers("/board").authenticated()
                         .antMatchers("/board/**").authenticated()
                         .anyRequest().authenticated()
                 )

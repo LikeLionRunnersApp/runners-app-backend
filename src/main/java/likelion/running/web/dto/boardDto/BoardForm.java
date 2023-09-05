@@ -24,6 +24,7 @@ public class BoardForm {
     private LocalDate time;
     private String runTime;
     private String walkTime;
+    private int repeat;
     private int play_time;
     private int totalMember;
     private BoardStatus status;
