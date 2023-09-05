@@ -23,7 +23,7 @@ spring:
 
 jwt:
   header: Authorization
-  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
+
   #echo 'likelion-dev-spring-boot-jwt-lets-running-likelion-I'm-happy-with-you'|base64
   secret: bGlrZWxpb24tZGV2LXNwcmluZy1ib290LWp3dC1sZXRzLXJ1bm5pbmctbGlrZWxpb24tSSdtLWhhcHB5LXdpdGgteW91
   token-validity-in-seconds: 86400
