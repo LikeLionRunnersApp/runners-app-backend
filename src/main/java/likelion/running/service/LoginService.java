@@ -110,7 +110,7 @@ public class LoginService implements UserDetailsService {
             //api호출용 access token
             String access_Token = kakaoToken.getAccess_token();
             //access 토큰 만료되면 refresh token사용(유효기간 더 김)
-            String refresh_Token = kakaoToken.getRefresh_token();
+            String refresh_Token =kakaoToken.getRefresh_token();
 
 
             log.info("access_token = {}", access_Token);
