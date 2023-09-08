@@ -30,6 +30,7 @@ public class MemberService {
 
     private static final String PHONE_PATTERN = "^(02|0[1-9][0-9]?)-[0-9]{3,4}-[0-9]{4}$";
     private static final Pattern phonePattern = Pattern.compile(PHONE_PATTERN);
+
     @Autowired
     public MemberService(MemberJpaRepository memberJpaRepository, MemberAuthorityJpaRepository memberAuthorityJpaRepository, PasswordEncoder passwordEncoder) {
         this.memberJpaRepository = memberJpaRepository;
@@ -45,7 +46,7 @@ public class MemberService {
         if(memberJpaRepository.findOneWithAuthoritiesByMemberId(memberDto.getMemberId()).orElse(null)!=null){
             return new SignUpResult("duplicatedId");
         }
-        if(!memberDto.getPassWord().equals(memberDto.getCheckPassWord())){
+        if(!memberDto.getPassword().equals(memberDto.getCheckPassWord())){
             return new SignUpResult("pwValidation");
         }
         if(!isValidPhone(memberDto.getPhoneNum())){
@@ -57,7 +58,7 @@ public class MemberService {
                 .memberId(memberDto.getMemberId())
                 .name(memberDto.getName())
                 .phoneNum(memberDto.getPhoneNum())
-                .password(passwordEncoder.encode(memberDto.getPassWord()))
+                .password(passwordEncoder.encode(memberDto.getPassword()))
                 .authorities(new HashSet<>())
                 .activated(true)
                 .build();
