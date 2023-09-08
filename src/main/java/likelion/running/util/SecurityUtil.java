@@ -1,6 +1,5 @@
 package likelion.running.util;
 
-import likelion.running.config.SecurityConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

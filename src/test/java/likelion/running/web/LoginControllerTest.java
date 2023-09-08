@@ -26,7 +26,7 @@ class LoginControllerTest {
         //given
         SignUpDto member = SignUpDto.builder().build();
         member.setMemberId("lion@naver.com");
-        member.setPassWord("qwer");
+        member.setPassword("qwer");
         member.setCheckPassWord("qwer");
         member.setName("park");
         //when
@@ -43,7 +43,7 @@ class LoginControllerTest {
         SignUpDto member = SignUpDto.builder()
                 .build();
         member.setMemberId("lion@naver.com");
-        member.setPassWord("qwer");
+        member.setPassword("qwer");
         member.setCheckPassWord("qwer");
         member.setName("park");
         SignUpResult result = memberService.signUp(member);
