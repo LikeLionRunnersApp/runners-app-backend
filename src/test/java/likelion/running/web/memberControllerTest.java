@@ -58,7 +58,7 @@ class memberControllerTest {
                 .build();
         guestService.joinRunning(guest2);
         MemberDto memberDto = new MemberDto();
-        memberDto.setHostId("host@naver.com");
+        memberDto.setMemberId("host@naver.com");
         List<Guest> members = guestService.findMembers(memberDto);
         //then
         Assertions.assertThat(members.size()).isEqualTo(2);
