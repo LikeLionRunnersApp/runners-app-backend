@@ -1,7 +1,9 @@
 package likelion.running.service;
 
+import likelion.running.domain.Kakao.KakaoResult;
 import likelion.running.domain.member.*;
 import likelion.running.domain.signUp.SignUpResult;
+import likelion.running.web.dto.memberDto.KakaoSignUpDto;
 import likelion.running.web.dto.memberDto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,13 +74,55 @@ public class MemberService {
         return new SignUpResult("true");
     }
 
+    public SignUpResult kakaoSignUp(KakaoResult kakaoResult, KakaoSignUpDto kakaoSignUpDto){
+        if(!isValidEmail(kakaoResult.getEmail())){
+            return new SignUpResult("idValidation");
+        }
+        if(memberJpaRepository.findOneWithAuthoritiesByMemberId(kakaoResult.getEmail()).orElse(null)!=null){
+            return new SignUpResult("duplicatedId");
+        }
+
+        Member member = Member.builder()
+                .memberId(kakaoResult.getEmail())
+                .name(kakaoSignUpDto.getName())
+                .phoneNum(kakaoSignUpDto.getPhoneNum())
+                .authorities(new HashSet<>())
+                .activated(true)
+                .build();
+
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
+
+        MemberAuthority memberAuthority = MemberAuthority.builder()
+                .member(member)
+                .authority(authority)
+                .build();
+
+        member.getAuthorities().add(memberAuthority);
+
+        log.info(member.getMemberId());
+        memberAuthorityJpaRepository.save(memberAuthority);
+        Member save = memberJpaRepository.save(member);
+        log.info("멤버 저장 됨 {}",save.getId());
+        log.info(save.getPassword());
+
+        return new SignUpResult("true");
+    }
+
     public Optional<Member> findById(Long id){
         return memberJpaRepository.findMemberById(id);
     }
 
     public Optional<Member> findByName(String name){
-        return memberJpaRepository.findMemberByMemberId(name);
+        return memberJpaRepository.findMemberByName(name);
     }
+
+    public Optional<Member> findByMemberId(String memberId){
+        return memberJpaRepository.findMemberByMemberId(memberId);
+    }
+
+
 
     public boolean isValidEmail(String email) {
         Matcher matcher = pattern.matcher(email);

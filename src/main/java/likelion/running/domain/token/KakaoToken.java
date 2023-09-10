@@ -15,8 +15,6 @@ public class KakaoToken {
     private String refresh_token;
     private Integer refresh_token_expires_in;
     private String scope;
-
-
 }
 
 

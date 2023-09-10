@@ -27,6 +27,8 @@ public class Member {
     @Column(length = 10, name = "name")
     private String name;
 
+    @Column(length = 13, name = "phoneNum")
+    private String phoneNum;
     @Column(name = "password", length = 100)
     private String password;
 
