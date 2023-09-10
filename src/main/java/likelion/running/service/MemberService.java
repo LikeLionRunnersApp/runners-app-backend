@@ -130,4 +130,5 @@ public class MemberService {
         log.info("인증 코드 갱신 실패");
         return false;
     }
+
 }

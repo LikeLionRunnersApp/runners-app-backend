@@ -14,4 +14,6 @@ public interface BoardJpaRepository extends JpaRepository<Board,Long> {
     Optional<Board> findBoardByHostId(String hostId);
     List<Board> findAllByTime(LocalDate time);
     List<Board> findByHostId(String hostId);
+
+    List<Board> findAllByHostIdAndTimeIsAfter(String hostId,LocalDate time);
 }

@@ -8,6 +8,5 @@ import java.util.List;
 @Repository
 public interface GuestJpaRepository extends JpaRepository<Guest,Long> {
     List<Guest> findAllByBoardId(Long boardId);
-
     List<Guest> findByGuestId(String memberId);
 }

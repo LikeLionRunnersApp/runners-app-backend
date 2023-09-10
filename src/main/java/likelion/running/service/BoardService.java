@@ -62,13 +62,15 @@ public class BoardService {
 
     public List<Board> findAllBoardByMemberId(String memberId){
 
-        List<Board> boards = boardJpaRepository.findByHostId(memberId);
         List<Guest> guests = guestJpaRepository.findByGuestId(memberId);
+
+        List<Board> boards = boardJpaRepository.findAllByHostIdAndTimeIsAfter(memberId,LocalDate.now());
 
         List<Board> list = new ArrayList<>();
         for (Board board : boards) {
             log.info(String.valueOf(board.getId()));
-            if(board.getTime()!=null){
+            LocalDate time = board.getTime();
+            if(time!=null){
                 list.add(board);
             }
         }
@@ -78,7 +80,7 @@ public class BoardService {
             Optional<Board> board = boardJpaRepository.findBoardById(guest.getBoardId());
             log.info(guest.getGuestId());
             board.ifPresent(value-> {
-                if(value.getTime()!=null)
+                if(value.getTime()!=null && value.getTime().isAfter(LocalDate.now()))
                     list.add(value);
             });
         }
