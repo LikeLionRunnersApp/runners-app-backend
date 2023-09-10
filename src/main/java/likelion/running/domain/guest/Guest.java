@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Guest {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

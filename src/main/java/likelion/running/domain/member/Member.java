@@ -50,13 +50,6 @@ public class Member {
         this.phoneNum = memberEditDto.getPhoneNum();
         this.authorities = memberEditDto.getAuthorities();
     }
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_authority",
-//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
-//    )
-//    private Set<Authority> authorities;
     public MemberEditDto.MemberEditDtoBuilder toEditor(){
         return MemberEditDto.builder()
                 .memberId(memberId)
@@ -66,4 +59,11 @@ public class Member {
                 .phoneNum(phoneNum)
                 .AuthCode(authCode);
     }//memberAuthCode 수정을 위한 코드짜기
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_authority",
+//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
+//    )
+//    private Set<Authority> authorities;
 }

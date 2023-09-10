@@ -42,21 +42,32 @@ public class TestDataInit {
                 .build());
 
         Optional<Board> board2 = boardService.openRunning(BoardForm.builder()
-                .hostId("test@test.com")
+                .hostId("test1@test.com")
                 .title("tttt")
                 .totalMember(10)
-                .time(LocalDate.of(2023,8,16))
+                .time(LocalDate.of(2023,9,16))
                 .build());
 
         Optional<Board> board3 = boardService.openRunning(BoardForm.builder()
                 .hostId("test@test.com")
                 .title("tttt")
                 .totalMember(10)
-                .time(LocalDate.of(2023,8,15))
+                .time(LocalDate.of(2023,10,15))
                 .build());
 
+        Optional<Board> board4 = boardService.openRunning(BoardForm.builder()
+                .hostId("test@test.com")
+                .title("tttt")
+                .totalMember(10)
+                .time(LocalDate.of(2023,9,15))
+                .build());
         log.info("test {}",test);
         log.info("test board {}",board1);
+
+        guestService.joinRunning(GuestDto.builder()
+                .memberId("test@test.com")
+                .boardId(board2.get().getId())
+                .build());
 
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test2@test.com")
@@ -70,6 +81,5 @@ public class TestDataInit {
                 .memberId("test4@test.com")
                 .boardId(board1.get().getId())
                 .build());
-
     }
 }
