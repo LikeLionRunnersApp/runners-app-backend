@@ -21,5 +21,5 @@ public class KakaoSignUpDto {
     private String phoneNum;
 
     @NotEmpty
-    private String access_token;
+    private String accessToken;
 }

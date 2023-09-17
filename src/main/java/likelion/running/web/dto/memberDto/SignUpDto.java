@@ -29,6 +29,10 @@ public class SignUpDto {
     @Size(max = 10)
     private String name;
 
+    @NotEmpty
+    @Size(max = 13)
+    private String phoneNum;
+
     private Set<AuthorityDto> authorityDtoSet;
     /*public static SignUpDto from(Member member){
         if(member == null) return null;

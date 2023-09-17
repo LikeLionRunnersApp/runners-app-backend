@@ -54,10 +54,10 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/login")
                                 ,new AntPathRequestMatcher("/sign-up")
                                 ,new AntPathRequestMatcher("/kakaologin")
-                                ,new AntPathRequestMatcher("/login/kakao-redirect/**")
+                                ,new AntPathRequestMatcher("/kakaologin/redirect")
+                                ,new AntPathRequestMatcher("/kakao/MemberCheck")
+                                ,new AntPathRequestMatcher("/sign-up/2")
                         ).permitAll()
-                        .antMatchers("/board").permitAll()
-                        .antMatchers("/board/**").authenticated()
                         .anyRequest().authenticated()
                 )
 
