@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - BoardControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>BoardControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/likelion.running.web.html">likelion.running.web</a> &gt; BoardControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">6</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.031s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">deleteBoard()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findAllBoard()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findBoard()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">increase()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">openRun()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">updateBoard()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-09-08 23:47:16.777  INFO 2611 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [likelion.running.web.BoardControllerTest], using SpringBootContextLoader
+2023-09-08 23:47:16.777  INFO 2611 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [likelion.running.web.BoardControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-09-08 23:47:16.777  INFO 2611 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [likelion.running.web.BoardControllerTest]: BoardControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-09-08 23:47:16.777  INFO 2611 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration likelion.running.RunningApplication for test class likelion.running.web.BoardControllerTest
+2023-09-08 23:47:16.778  INFO 2611 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-09-08 23:47:16.778  INFO 2611 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@68c9cf93, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2715b3ea, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@30130a31, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5aa0d535, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7cb32ca5, org.springframework.test.context.support.DirtiesContextTestExecutionListener@76334a3a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5e59844f, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@28cfbcc, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@67bf393c, org.springframework.test.context.event.EventPublishingTestExecutionListener@b31cd6b, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@19d85bbe, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@7c6f91d2, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@628721ba, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@67d8e214, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3c0640fa, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3c67b7a9, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@67b6cb6e]
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.781  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 test
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.784  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    select
+        board0_.id as id1_1_0_,
+        board0_.content as content2_1_0_,
+        board0_.flag as flag3_1_0_,
+        board0_.host_id as host_id4_1_0_,
+        board0_.join_member as join_mem5_1_0_,
+        board0_.place as place6_1_0_,
+        board0_.play_time as play_tim7_1_0_,
+        board0_.repeat as repeat8_1_0_,
+        board0_.run_time as run_time9_1_0_,
+        board0_.status as status10_1_0_,
+        board0_.time as time11_1_0_,
+        board0_.title as title12_1_0_,
+        board0_.total_member as total_m13_1_0_,
+        board0_.walk_time as walk_ti14_1_0_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    delete 
+    from
+        board 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.790  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+2023-09-08 23:47:16.791  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board title test
+2023-09-08 23:47:16.791  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board content test start
+Hibernate: 
+    update
+        board 
+    set
+        content=?,
+        flag=?,
+        host_id=?,
+        join_member=?,
+        place=?,
+        play_time=?,
+        repeat=?,
+        run_time=?,
+        status=?,
+        time=?,
+        title=?,
+        total_member=?,
+        walk_time=? 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.794  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 test
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        guest
+        (id, board_id, guest_id, participate) 
+    values
+        (default, ?, ?, ?)
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_0_,
+        board0_.content as content2_1_0_,
+        board0_.flag as flag3_1_0_,
+        board0_.host_id as host_id4_1_0_,
+        board0_.join_member as join_mem5_1_0_,
+        board0_.place as place6_1_0_,
+        board0_.play_time as play_tim7_1_0_,
+        board0_.repeat as repeat8_1_0_,
+        board0_.run_time as run_time9_1_0_,
+        board0_.status as status10_1_0_,
+        board0_.time as time11_1_0_,
+        board0_.title as title12_1_0_,
+        board0_.total_member as total_m13_1_0_,
+        board0_.walk_time as walk_ti14_1_0_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    update
+        board 
+    set
+        content=?,
+        flag=?,
+        host_id=?,
+        join_member=?,
+        place=?,
+        play_time=?,
+        repeat=?,
+        run_time=?,
+        status=?,
+        time=?,
+        title=?,
+        total_member=?,
+        walk_time=? 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        guest
+        (id, board_id, guest_id, participate) 
+    values
+        (default, ?, ?, ?)
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_0_,
+        board0_.content as content2_1_0_,
+        board0_.flag as flag3_1_0_,
+        board0_.host_id as host_id4_1_0_,
+        board0_.join_member as join_mem5_1_0_,
+        board0_.place as place6_1_0_,
+        board0_.play_time as play_tim7_1_0_,
+        board0_.repeat as repeat8_1_0_,
+        board0_.run_time as run_time9_1_0_,
+        board0_.status as status10_1_0_,
+        board0_.time as time11_1_0_,
+        board0_.title as title12_1_0_,
+        board0_.total_member as total_m13_1_0_,
+        board0_.walk_time as walk_ti14_1_0_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    update
+        board 
+    set
+        content=?,
+        flag=?,
+        host_id=?,
+        join_member=?,
+        place=?,
+        play_time=?,
+        repeat=?,
+        run_time=?,
+        status=?,
+        time=?,
+        title=?,
+        total_member=?,
+        walk_time=? 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.801  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.804  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.805  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    insert 
+    into
+        board
+        (id, content, flag, host_id, join_member, place, play_time, repeat, run_time, status, time, title, total_member, walk_time) 
+    values
+        (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-09-08 23:47:16.805  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : board 생성 mooyaho
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        guest
+        (id, board_id, guest_id, participate) 
+    values
+        (default, ?, ?, ?)
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_0_,
+        board0_.content as content2_1_0_,
+        board0_.flag as flag3_1_0_,
+        board0_.host_id as host_id4_1_0_,
+        board0_.join_member as join_mem5_1_0_,
+        board0_.place as place6_1_0_,
+        board0_.play_time as play_tim7_1_0_,
+        board0_.repeat as repeat8_1_0_,
+        board0_.run_time as run_time9_1_0_,
+        board0_.status as status10_1_0_,
+        board0_.time as time11_1_0_,
+        board0_.title as title12_1_0_,
+        board0_.total_member as total_m13_1_0_,
+        board0_.walk_time as walk_ti14_1_0_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    update
+        board 
+    set
+        content=?,
+        flag=?,
+        host_id=?,
+        join_member=?,
+        place=?,
+        play_time=?,
+        repeat=?,
+        run_time=?,
+        status=?,
+        time=?,
+        title=?,
+        total_member=?,
+        walk_time=? 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    insert 
+    into
+        guest
+        (id, board_id, guest_id, participate) 
+    values
+        (default, ?, ?, ?)
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_0_,
+        board0_.content as content2_1_0_,
+        board0_.flag as flag3_1_0_,
+        board0_.host_id as host_id4_1_0_,
+        board0_.join_member as join_mem5_1_0_,
+        board0_.place as place6_1_0_,
+        board0_.play_time as play_tim7_1_0_,
+        board0_.repeat as repeat8_1_0_,
+        board0_.run_time as run_time9_1_0_,
+        board0_.status as status10_1_0_,
+        board0_.time as time11_1_0_,
+        board0_.title as title12_1_0_,
+        board0_.total_member as total_m13_1_0_,
+        board0_.walk_time as walk_ti14_1_0_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+Hibernate: 
+    update
+        board 
+    set
+        content=?,
+        flag=?,
+        host_id=?,
+        join_member=?,
+        place=?,
+        play_time=?,
+        repeat=?,
+        run_time=?,
+        status=?,
+        time=?,
+        title=?,
+        total_member=?,
+        walk_time=? 
+    where
+        id=?
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.host_id=?
+Hibernate: 
+    select
+        guest0_.id as id1_2_,
+        guest0_.board_id as board_id2_2_,
+        guest0_.guest_id as guest_id3_2_,
+        guest0_.participate as particip4_2_ 
+    from
+        guest guest0_ 
+    where
+        guest0_.guest_id=?
+2023-09-08 23:47:16.811  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : 11
+2023-09-08 23:47:16.811  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : false
+Hibernate: 
+    select
+        board0_.id as id1_1_,
+        board0_.content as content2_1_,
+        board0_.flag as flag3_1_,
+        board0_.host_id as host_id4_1_,
+        board0_.join_member as join_mem5_1_,
+        board0_.place as place6_1_,
+        board0_.play_time as play_tim7_1_,
+        board0_.repeat as repeat8_1_,
+        board0_.run_time as run_time9_1_,
+        board0_.status as status10_1_,
+        board0_.time as time11_1_,
+        board0_.title as title12_1_,
+        board0_.total_member as total_m13_1_,
+        board0_.walk_time as walk_ti14_1_ 
+    from
+        board board0_ 
+    where
+        board0_.id=?
+2023-09-08 23:47:16.812  INFO 2611 --- [    Test worker] likelion.running.service.BoardService    : test2@naver.com
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at 2023. 9. 8. 오후 11:47:17</p>
+</div>
+</div>
+</body>
+</html>
