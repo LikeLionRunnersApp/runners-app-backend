@@ -31,7 +31,7 @@ class LoginControllerTest {
         member.setName("park");
         //when
         SignUpResult result = memberService.signUp(member);
-
+        System.out.println("tlqkf");
         //then
         Assertions.assertThat(result.getSignUpResult()).isEqualTo("true");
 
