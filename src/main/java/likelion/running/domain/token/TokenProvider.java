@@ -50,11 +50,7 @@ public class TokenProvider implements InitializingBean {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        log.info(authorities);
-//        log.info(authentication.getCredentials().toString());
-//        log.info(authentication.getDetails().toString());
-        log.info(authentication.getPrincipal().toString());
-        authentication.getAuthorities().forEach(System.out::println);
+        log.info("auth : {}",authorities);
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityMilliseconds);//만료 시간 설정
 
@@ -66,6 +62,33 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
+    public String createTokenWithKakao(String subject){
+        long now = (new Date()).getTime();
+        Date validity = new Date(now + this.tokenValidityMilliseconds);//만료 시간 설정
+        return Jwts.builder()
+                .setSubject(subject)
+                .claim(AUTHORITIES_KEY,"ROLE_USER")
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(validity)
+                .compact();
+    }
+
+    public String extractSubject(String accessToken){
+        Claims claims = parserClaims(accessToken);
+        return claims.getSubject();
+    }
+
+    private Claims parserClaims(String accessToken){
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(accessToken)
+                    .getBody();
+        }catch (ExpiredJwtException e){
+            return e.getClaims();
+        }
+    }
     public Authentication getAuthentication(String token){
         Claims claims = Jwts
                 .parserBuilder()

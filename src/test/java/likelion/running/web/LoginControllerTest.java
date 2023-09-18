@@ -1,11 +1,10 @@
 package likelion.running.web;
 
-import likelion.running.domain.signUp.SignUpResult;
+import likelion.running.domain.Result.SignUpResult;
 import likelion.running.service.LoginService;
 import likelion.running.service.MemberService;
 import likelion.running.web.dto.memberDto.SignUpDto;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;

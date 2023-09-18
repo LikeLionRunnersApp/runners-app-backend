@@ -1,4 +1,4 @@
-package likelion.running.domain.signUp;
+package likelion.running.domain.Result;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
