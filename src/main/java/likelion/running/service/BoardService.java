@@ -41,6 +41,7 @@ public class BoardService {
                 .time(boardForm.getTime())
                 .build());
         log.info("board 생성 {}",board.getTitle());
+        System.out.println("Hello World");
         return Optional.of(board);
     }
 
