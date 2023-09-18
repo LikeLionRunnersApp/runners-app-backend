@@ -10,6 +10,8 @@ import likelion.running.web.dto.memberDto.KakaoSignUpDto;
 import likelion.running.web.dto.memberDto.LoginDto;
 import likelion.running.web.dto.memberDto.TokenDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -66,7 +68,7 @@ public class KakaoController {
         Optional<Member> member = memberService.findByMemberId(kakaoResult.getEmail());
 
         if(member.isEmpty()){
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(new TokenDto(""),new HttpHeaders(), HttpStatus.OK);
         }
 
         LoginDto loginDto = new LoginDto();

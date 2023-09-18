@@ -9,6 +9,8 @@ import likelion.running.web.dto.memberDto.*;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -144,6 +146,9 @@ public class MemberService {
 
         String accessToken = kakaoSignUpDto.getAccessToken();
         KakaoResult kakaoResult = requestUser(accessToken);
+        if(memberJpaRepository.findMemberByMemberId(kakaoResult.getEmail()).isPresent()){
+            return new ResponseEntity<>(new TokenDto(""),new HttpHeaders(), HttpStatus.OK);
+        }
 
         Member member = Member.builder()
                 .memberId(kakaoResult.getEmail())
@@ -153,13 +158,11 @@ public class MemberService {
                 .activated(true)
                 .build();
 
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
-
         MemberAuthority memberAuthority = MemberAuthority.builder()
                 .member(member)
-                .authority(authority)
+                .authority(Authority.builder()
+                        .authorityName("ROLE_USER")
+                        .build())
                 .build();
 
         member.getAuthorities().add(memberAuthority);
