@@ -21,7 +21,6 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
-
     private final BoardService boardService;
     @Autowired
     public BoardController(BoardService boardService) {
