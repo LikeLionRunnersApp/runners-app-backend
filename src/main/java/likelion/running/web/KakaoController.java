@@ -10,20 +10,20 @@ import likelion.running.web.dto.memberDto.KakaoSignUpDto;
 import likelion.running.web.dto.memberDto.LoginDto;
 import likelion.running.web.dto.memberDto.TokenDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Optional;
 
 @Slf4j
 @Controller
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class KakaoController {
 
     private final MemberService memberService;
@@ -66,7 +66,7 @@ public class KakaoController {
         Optional<Member> member = memberService.findByMemberId(kakaoResult.getEmail());
 
         if(member.isEmpty()){
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(new TokenDto(""), new HttpHeaders(), HttpStatus.OK);
         }
 
         LoginDto loginDto = new LoginDto();
