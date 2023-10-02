@@ -9,6 +9,7 @@ import likelion.running.web.dto.memberDto.MemberDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class GuestService {
         this.boardService = boardService;
     }
 
+    @Transactional
     public ParticipateResult joinRunning(GuestDto guestDto){
 
         Optional<Board> board = boardService.findByBoardId(guestDto.getBoardId());
@@ -35,11 +37,13 @@ public class GuestService {
                 return ParticipateResult.FULL;
             }
             else {
-                guestJpaRepository.save(Guest.builder()
+                Guest build = Guest.builder()
+                        .board(board.get())
                         .guestId(guestDto.getMemberId())
-                        .boardId(guestDto.getBoardId())
                         .participate(guestDto.isParticipate())
-                        .build());
+                        .build();
+                guestJpaRepository.save(build);
+                board.get().joinGuest(build);
 
                 boardService.increaseMember(guestDto);
                 return ParticipateResult.TRUE;

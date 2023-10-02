@@ -3,6 +3,7 @@ package likelion.running.web;
 import likelion.running.converter.StringToLocalDate;
 import likelion.running.domain.board.Board;
 import likelion.running.service.BoardService;
+import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.boardDto.BoardForm;
 
 import likelion.running.web.dto.boardDto.EditBoardDto;
@@ -28,9 +29,16 @@ public class BoardController {
     }
 
     @PostMapping("/board")
-    public boolean openRun(@RequestBody BoardForm boardForm){
+    public BoolRespose openRun(@RequestBody BoardForm boardForm){
         Optional<Board> board = boardService.openRunning(boardForm);
-        return board.isPresent();
+        if(board.isEmpty()){
+            return BoolRespose.builder()
+                    .ok(false)
+                    .build();
+        }
+        return BoolRespose.builder()
+                .ok(true)
+                .build();
     }
 
     @GetMapping("/board/{boardId}")
@@ -47,7 +55,7 @@ public class BoardController {
     }
 
     @PatchMapping("/board/{boardId}")
-    public boolean updateBoard(@PathVariable Long boardId, @Valid @RequestBody EditBoardDto editBoardDto){
+    public BoolRespose updateBoard(@PathVariable Long boardId, @Valid @RequestBody EditBoardDto editBoardDto){
         log.info("update 시도 {}",boardId);
         Optional<Board> board = boardService.findByBoardId(boardId);
         if(board.isPresent()){
@@ -56,7 +64,9 @@ public class BoardController {
                 return boardService.editBoard(boardId, editBoardDto);
             }
         }//모임이 있는지 확인
-        return false;
+        return BoolRespose.builder()
+                .ok(false)
+                .build();
     }
 
     @GetMapping("/week/{date}")

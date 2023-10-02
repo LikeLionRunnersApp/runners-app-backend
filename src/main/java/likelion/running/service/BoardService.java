@@ -4,6 +4,7 @@ import likelion.running.domain.board.Board;
 import likelion.running.domain.board.BoardJpaRepository;
 import likelion.running.domain.guest.Guest;
 import likelion.running.domain.guest.GuestJpaRepository;
+import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.boardDto.BoardForm;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import likelion.running.web.dto.memberDto.GuestDto;
@@ -37,9 +38,10 @@ public class BoardService {
                 .flag(boardForm.getFlag())
                 .runTime(boardForm.getRunTime())
                 .walkTime(boardForm.getWalkTime())
-                .play_time(boardForm.getPlay_time())
+                .playTime(boardForm.getPlayTime())
                 .status(boardForm.getStatus())
                 .time(boardForm.getTime())
+                .guests(boardForm.getGuest())
                 .build());
         log.info("board 생성 {}",board.getTitle());
         return Optional.of(board);
@@ -77,7 +79,7 @@ public class BoardService {
         log.info(String.valueOf(boards.isEmpty()));
 
         for (Guest guest : guests) {
-            Optional<Board> board = boardJpaRepository.findBoardById(guest.getBoardId());
+            Optional<Board> board = boardJpaRepository.findBoardById(guest.getBoard().getId());
             log.info(guest.getGuestId());
             board.ifPresent(value-> {
                 if(value.getTime()!=null && value.getTime().isAfter(LocalDate.now()))
@@ -97,7 +99,7 @@ public class BoardService {
     }
 
     @Transactional
-    public boolean editBoard(Long boardId, EditBoardDto editBoardDto){
+    public BoolRespose editBoard(Long boardId, EditBoardDto editBoardDto){
         Board board = boardJpaRepository.findBoardById(boardId).orElseThrow();
         EditBoardDto.EditBoardDtoBuilder exist = board.toEditor();
         EditBoardDto editNew = exist.title(editBoardDto.getTitle())
@@ -109,13 +111,16 @@ public class BoardService {
                 .repeat(editBoardDto.getRepeat())
                 .time(editBoardDto.getTime())
                 .totalMember(editBoardDto.getTotalMember())
-                .play_time(editBoardDto.getPlay_time())
+                .playTime(editBoardDto.getPlayTime())
                 .status(editBoardDto.getStatus())
+                .guests(editBoardDto.getGuests())
                 .build();
         board.edit(editNew);
         log.info("board title {}", board.getTitle());
         log.info("board content {}", board.getContent());
-        return true;
+        return BoolRespose.builder()
+                .ok(true)
+                .build();
     }
 
     public void increaseMember(GuestDto guestDto){

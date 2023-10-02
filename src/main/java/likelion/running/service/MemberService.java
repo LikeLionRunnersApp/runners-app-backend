@@ -1,10 +1,13 @@
 package likelion.running.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.mail.imap.protocol.BODY;
 import likelion.running.domain.Result.KakaoResult;
+import likelion.running.domain.board.Board;
 import likelion.running.domain.member.*;
 import likelion.running.domain.Result.SignUpResult;
 import likelion.running.domain.token.KakaoToken;
+import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.memberDto.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,20 +52,7 @@ public class MemberService {
     }
 
     @Transactional
-    public SignUpResult signUp(SignUpDto memberDto){
-        if(!isValidEmail(memberDto.getMemberId())){
-            return new SignUpResult("idValidation");
-        }
-        if(memberJpaRepository.findOneWithAuthoritiesByMemberId(memberDto.getMemberId()).orElse(null)!=null){
-            return new SignUpResult("duplicatedId");
-        }
-        if(!memberDto.getPassword().equals(memberDto.getCheckPassWord())){
-            return new SignUpResult("pwValidation");
-        }
-        if(!isValidPhone(memberDto.getPhoneNum())){
-            log.info(memberDto.getPhoneNum());
-            return new SignUpResult("WrongNum");
-        }
+    public BoolRespose signUp(SignUpDto memberDto){
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
@@ -85,12 +75,16 @@ public class MemberService {
         member.getAuthorities().add(memberAuthority);
 
         log.info(member.getMemberId());
+
         memberAuthorityJpaRepository.save(memberAuthority);
         Member save = memberJpaRepository.save(member);
+
         log.info("멤버 저장 됨 {}",save.getId());
         log.info(save.getPassword());
 
-        return new SignUpResult("true");
+        return BoolRespose.builder()
+                .ok(true)
+                .build();
     }
 
     public Optional<Member> findById(Long id){
@@ -118,16 +112,20 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean checkAuthCode(String memberId, String authCode){
+    public BoolRespose checkAuthCode(String memberId, String authCode){
         log.info("MemberId = {}",memberId);
         log.info("authCode = {}",authCode);
         Optional<Member> member = memberJpaRepository.findMemberByMemberId(memberId);
         log.info(String.valueOf(member.isEmpty()));
-        return member.map(value -> value.getAuthCode().equals(authCode)).orElse(false);
+        Boolean result = member.map(value -> value.getAuthCode().equals(authCode)).orElse(false);
+
+        return BoolRespose.builder()
+                .ok(result)
+                .build();
     }
 
     @Transactional
-    public boolean authCodeEdit(Member member, String message){
+    public BoolRespose authCodeEdit(Member member, String message){
 
         Optional<Member> value = memberJpaRepository.findMemberByMemberId(member.getMemberId());
 
@@ -135,12 +133,35 @@ public class MemberService {
             MemberEditDto build = value.get().toEditor().AuthCode(message).build();
             value.get().edit(build);
             log.info("인증 코드 갱신 성공");
-            return true;
+            return BoolRespose.builder()
+                    .ok(true)
+                    .build();
         }
         log.info("인증 코드 갱신 실패");
-        return false;
+
+        return BoolRespose.builder()
+                .ok(false)
+                .build();
     }
 
+    @Transactional
+    public BoolRespose passwordReset(LoginDto loginDto){
+        Optional<Member> member = memberJpaRepository.findMemberByMemberId(loginDto.getMemberId());
+
+
+        if(member.isEmpty()){
+            return BoolRespose.builder().ok(false).build();
+        }
+
+        MemberEditDto build = member.get()
+                .toEditor()
+                .password(passwordEncoder.encode(loginDto.getPassword()))
+                .build();
+
+        member.get().edit(build);
+
+        return BoolRespose.builder().ok(true).build();
+    }
     @Transactional
     public ResponseEntity<TokenDto> kakaoSignUp(KakaoSignUpDto kakaoSignUpDto){
 

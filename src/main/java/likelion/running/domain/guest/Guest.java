@@ -1,11 +1,10 @@
 package likelion.running.domain.guest;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import likelion.running.domain.board.Board;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Builder
@@ -16,11 +15,14 @@ import javax.persistence.Id;
 public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long boardId;
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    @JsonBackReference
+    private Board board;
 
-    String guestId;
+    private String guestId;
 
-    boolean participate;
+    private boolean participate;
 }

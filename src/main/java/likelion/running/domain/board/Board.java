@@ -1,9 +1,14 @@
 package likelion.running.domain.board;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import likelion.running.domain.guest.Guest;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -31,12 +36,23 @@ public class Board {
     private LocalDate time;
     private String runTime;
     private String walkTime;
-    private int play_time;
+    private int playTime;
     private int repeat;
     private int joinMember;
     private int totalMember;
 
     private BoardStatus status;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    private List<Guest> guests;
+
+    public void joinGuest(Guest guest){
+        if(guests.isEmpty()){
+            guests = new ArrayList<>();
+        }
+        guests.add(guest);
+    }
     public EditBoardDto.EditBoardDtoBuilder toEditor(){
         return EditBoardDto.builder()
                 .memberId(hostId)
@@ -50,7 +66,8 @@ public class Board {
                 .totalMember(totalMember)
                 .status(status)
                 .flag(flag)
-                .play_time(play_time);
+                .guests(guests)
+                .playTime(playTime);
     }
 
     public void edit(EditBoardDto editBoardDto){
@@ -63,8 +80,9 @@ public class Board {
         time = editBoardDto.getTime();
         repeat = editBoardDto.getRepeat();
         totalMember = editBoardDto.getTotalMember();
-        play_time = editBoardDto.getPlay_time();
+        playTime = editBoardDto.getPlayTime();
         status = editBoardDto.getStatus();
+        guests = editBoardDto.getGuests();
     }
 
     public void increase(){

@@ -66,19 +66,23 @@ public class TestDataInit {
 
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test@test.com")
+                .participate(true)
                 .boardId(board2.get().getId())
                 .build());
 
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test2@test.com")
+                .participate(true)
                 .boardId(board1.get().getId())
                 .build());
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test3@test.com")
+                .participate(true)
                 .boardId(board1.get().getId())
                 .build());
         guestService.joinRunning(GuestDto.builder()
                 .memberId("test4@test.com")
+                .participate(true)
                 .boardId(board1.get().getId())
                 .build());
     }
