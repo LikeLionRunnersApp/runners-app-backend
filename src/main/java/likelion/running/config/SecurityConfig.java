@@ -38,8 +38,10 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors();
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(AbstractHttpConfigurer::disable)
@@ -51,7 +53,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/login")
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/login")
                                 ,new AntPathRequestMatcher("/sign-up")
                                 ,new AntPathRequestMatcher("/kakaologin")
                                 ,new AntPathRequestMatcher("/kakaologin/redirect")
@@ -74,7 +77,6 @@ public class SecurityConfig {
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
-
                 .apply(new JwtSecurityConfig(tokenProvider));
         return http.build();
     }

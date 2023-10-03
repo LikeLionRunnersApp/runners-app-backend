@@ -3,7 +3,6 @@ package likelion.running.web;
 import likelion.running.domain.guest.Guest;
 import likelion.running.domain.member.Member;
 import likelion.running.domain.participate.ParticipateResult;
-import likelion.running.domain.Result.SignUpResult;
 import likelion.running.service.GuestService;
 import likelion.running.service.MemberService;
 import likelion.running.web.dto.BoolRespose;

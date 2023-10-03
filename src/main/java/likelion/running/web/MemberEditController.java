@@ -24,7 +24,7 @@ public class MemberEditController {
         this.emailService = emailService;
     }
 
-    @GetMapping("/findMemberId")
+    @PostMapping("/findMemberId")
     public String handleFindMemberName(@RequestBody MemberDto memberDto) {
         // 아이디 찾기 로직 수행 후 결과를 모델에 추가하고 결과 화면 템플릿을 반환...log.info(name.get());
         Optional<Member> member = memberService.findByNameAndPhoneNum(memberDto);
