@@ -3,7 +3,6 @@ package likelion.running.web.dto.memberDto;
 import likelion.running.domain.member.MemberAuthority;
 import lombok.Builder;
 import lombok.Data;
-
 import java.util.Set;
 
 @Data

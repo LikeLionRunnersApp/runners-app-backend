@@ -1,6 +1,5 @@
 package likelion.running.domain.board;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import likelion.running.domain.guest.Guest;
 import likelion.running.web.dto.boardDto.EditBoardDto;
@@ -22,6 +21,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column()
     private String hostId;
 
     @Column(length = 100)
@@ -29,15 +29,16 @@ public class Board {
 
     @Column(length = 500)
     private String content;
+    @Column
     private FlagType flag;
 
-    private String place;
+    private String place_;
 
-    private LocalDate time;
+    private LocalDate normalTime;
     private String runTime;
     private String walkTime;
     private int playTime;
-    private int repeat;
+    private int repeat_;
     private int joinMember;
     private int totalMember;
 
@@ -47,22 +48,22 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private List<Guest> guests;
 
-    public void joinGuest(Guest guest){
+    public void joinGuest(Guest guest) {
         if(guests.isEmpty()){
             guests = new ArrayList<>();
         }
         guests.add(guest);
     }
-    public EditBoardDto.EditBoardDtoBuilder toEditor(){
+    public EditBoardDto.EditBoardDtoBuilder toEditor() {
         return EditBoardDto.builder()
                 .memberId(hostId)
                 .title(title)
                 .content(content)
-                .place(place)
+                .place(place_)
                 .runTime(runTime)
                 .walkTime(walkTime)
-                .time(time)
-                .repeat(repeat)
+                .time(normalTime)
+                .repeat(repeat_)
                 .totalMember(totalMember)
                 .status(status)
                 .flag(flag)
@@ -70,15 +71,15 @@ public class Board {
                 .playTime(playTime);
     }
 
-    public void edit(EditBoardDto editBoardDto){
+    public void edit(EditBoardDto editBoardDto) {
         title = editBoardDto.getTitle();
         content = editBoardDto.getContent();
         flag = editBoardDto.getFlag();
-        place = editBoardDto.getPlace();
+        place_ = editBoardDto.getPlace();
         runTime = editBoardDto.getRunTime();
         walkTime = editBoardDto.getWalkTime();
-        time = editBoardDto.getTime();
-        repeat = editBoardDto.getRepeat();
+        normalTime = editBoardDto.getTime();
+        repeat_ = editBoardDto.getRepeat();
         totalMember = editBoardDto.getTotalMember();
         playTime = editBoardDto.getPlayTime();
         status = editBoardDto.getStatus();

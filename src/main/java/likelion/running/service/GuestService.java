@@ -27,7 +27,7 @@ public class GuestService {
     }
 
     @Transactional
-    public ParticipateResult joinRunning(GuestDto guestDto){
+    public ParticipateResult joinRunning(GuestDto guestDto) {
 
         Optional<Board> board = boardService.findByBoardId(guestDto.getBoardId());
 
@@ -53,14 +53,15 @@ public class GuestService {
             return ParticipateResult.FALSE;
         }
     }
-    public List<Guest> findMembers(MemberDto memberDto){
+    public List<Guest> findMembers(MemberDto memberDto) {
         log.info(memberDto.toString());
         Long boardId = boardService.findByHostId(memberDto.getMemberId());
+
         log.info("boardId = {}",boardId);
         return guestJpaRepository.findAllByBoardId(boardId);
-    }
+    }//한 사람이 모임을 여러개 개최할 경우 NonUniqueResultException 이 서비스 구현 수정 필요
 
-    public boolean findByMemberId(Long boardId, String memberId){
+    public boolean findByMemberId(Long boardId, String memberId) {
         List<Guest> guests = guestJpaRepository.findAllByBoardId(boardId);
         return guests.stream().anyMatch(g -> g.getGuestId().equals(memberId));
     }

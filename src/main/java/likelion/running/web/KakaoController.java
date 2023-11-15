@@ -25,57 +25,26 @@ import java.util.Optional;
 @Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class KakaoController {
-
     private final MemberService memberService;
     private final TokenService tokenService;
     public KakaoController(MemberService memberService, TokenService tokenService) {
         this.memberService = memberService;
         this.tokenService = tokenService;
     }
-
-
-    /*@RequestMapping(value = "/kakaologin")
-    public String loginPage(){
-        return "kakaologin";
-    }
-*/
-    //redirect 경로 mapping
-   /* @RequestMapping(value = "/kakaologin/redirect")
-    public String kakaoLogin(@RequestParam(value = "code",required = false) String code){
-
-        if(code!=null){//카카오측에서 보내준 code가 있다면 출력합니다
-            System.out.println("code = " + code);
-
-            //추가됨: 카카오 토큰 요청
-            KakaoToken kakaoToken = memberService.requestToken(code);
-            log.info("kakoToken = {}", kakaoToken);
-            log.info(kakaoToken.getAccess_token());
-
-            //추가됨: 유저정보 요청
-            KakaoResult user = memberService.requestUser(kakaoToken.getAccess_token());
-            log.info("user = {}",user);
-
-        }
-        return "redirectPage";
-    }*/
-
     @PostMapping("/kakao/MemberCheck")
-    public ResponseEntity<TokenDto> isOurMember(@RequestBody HashMap<String,String> accessToken){
+    public ResponseEntity<TokenDto> isOurMember(@RequestBody HashMap<String,String> accessToken) {
         log.info("{}",accessToken.get("accessToken"));
         KakaoResult kakaoResult = memberService.requestUser(accessToken.get("accessToken"));
         Optional<Member> member = memberService.findByMemberId(kakaoResult.getEmail());
-
         if(member.isEmpty()){
             return new ResponseEntity<>(new TokenDto(""), new HttpHeaders(), HttpStatus.OK);
         }
-
         LoginDto loginDto = new LoginDto();
         loginDto.setMemberId(member.get().getMemberId());
         return tokenService.makeTokenWithKakao(loginDto.getMemberId());
     }
-
-    @PostMapping("/kakaoSignUp")
-    public ResponseEntity<TokenDto> kakaoSingUp(@Validated @RequestBody KakaoSignUpDto signUpDto, BindingResult bindingResult){
+    @PostMapping("/kakao/SignUp")
+    public ResponseEntity<TokenDto> kakaoSingUp(@Validated @RequestBody KakaoSignUpDto signUpDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.info("전화번호 혹은 이름이 잘못입력되었습니다.");
         }

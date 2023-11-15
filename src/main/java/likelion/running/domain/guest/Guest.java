@@ -3,7 +3,6 @@ package likelion.running.domain.guest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import likelion.running.domain.board.Board;
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter

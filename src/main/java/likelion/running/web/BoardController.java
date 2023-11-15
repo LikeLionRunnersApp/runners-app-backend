@@ -5,13 +5,11 @@ import likelion.running.domain.board.Board;
 import likelion.running.service.BoardService;
 import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.boardDto.BoardForm;
-
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ public class BoardController {
     }
 
     @PostMapping("/board")
-    public BoolRespose openRun(@RequestBody BoardForm boardForm){
+    public BoolRespose openRun(@RequestBody BoardForm boardForm) {
         Optional<Board> board = boardService.openRunning(boardForm);
         if(board.isEmpty()){
             return BoolRespose.builder()
@@ -42,20 +40,20 @@ public class BoardController {
     }
 
     @GetMapping("/board/{boardId}")
-    public Board getBoard(@PathVariable Long boardId){
+    public Board getBoard(@PathVariable Long boardId) {
         log.info(String.valueOf(boardId));
         return boardService.findByBoardId(boardId).orElse(null);
     }
 
     @DeleteMapping("/board/{boardId}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public String deleteBoard(@PathVariable Long boardId){
+    public String deleteBoard(@PathVariable Long boardId) {
         log.info("delete 시도 {}",boardId);
         return boardService.removeBoard(boardId);
     }
 
     @PatchMapping("/board/{boardId}")
-    public BoolRespose updateBoard(@PathVariable Long boardId, @Valid @RequestBody EditBoardDto editBoardDto){
+    public BoolRespose updateBoard(@PathVariable Long boardId, @Valid @RequestBody EditBoardDto editBoardDto) {
         log.info("update 시도 {}",boardId);
         Optional<Board> board = boardService.findByBoardId(boardId);
         if(board.isPresent()){
@@ -70,14 +68,14 @@ public class BoardController {
     }
 
     @GetMapping("/week/{date}")
-    public List<Board> getWeek(@PathVariable String date){
+    public List<Board> getWeek(@PathVariable String date) {
         StringToLocalDate converter = new StringToLocalDate();
         LocalDate time = converter.convert(date);
         return boardService.findAllBoardByTime(time);
     }
 
     @GetMapping("/coming-soon")
-    public List<Board> getComing(@RequestBody HashMap<String, String> memberId){
+    public List<Board> getComing(@RequestBody HashMap<String, String> memberId) {
         log.info("id {}",memberId);
         String memberName = memberId.get("memberId");
         return boardService.findAllBoardByMemberId(memberName);

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-
 @Getter
 public enum BoardStatus {
     START("start"),PARTICIPATION("participation"),COMPLETE("complete");
@@ -15,9 +14,9 @@ public enum BoardStatus {
         this.value = value;
     }
     @JsonCreator
-    public static BoardStatus from(String value){
-        for(BoardStatus status : BoardStatus.values()){
-            if(status.getValue().equals(value)){
+    public static BoardStatus from(String value) {
+        for (BoardStatus status : BoardStatus.values()) {
+            if (status.getValue().equals(value)) {
                 return status;
             }
         }
@@ -28,5 +27,4 @@ public enum BoardStatus {
     public String getValue(){
         return value;
     }
-
 }

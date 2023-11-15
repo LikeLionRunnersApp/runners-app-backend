@@ -15,12 +15,14 @@ public enum FlagType {
     }
 
     @JsonValue
-    public String getValue(){return value;}
+    public String getValue() {
+        return value;
+    }
 
     @JsonCreator
-    public static FlagType from(String value){
+    public static FlagType from(String value) {
         for (FlagType status : FlagType.values()) {
-            if(status.getValue().equals(value)){
+            if (status.getValue().equals(value)) {
                 return status;
             }
         }

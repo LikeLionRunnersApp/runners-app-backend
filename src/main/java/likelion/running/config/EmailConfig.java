@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-
 import java.util.Properties;
 
 @Configuration
@@ -38,7 +37,7 @@ public class EmailConfig {
     private String password;
 
     @Bean
-    public JavaMailSender javaMailService(){
+    public JavaMailSender javaMailService() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setUsername(id);
@@ -49,7 +48,7 @@ public class EmailConfig {
         return javaMailSender;
     }
 
-    private Properties getMailProperties(){
+    private Properties getMailProperties() {
         Properties pt = new Properties();
         pt.put("mail.smtp.socketFactory.port", socketPort);
         pt.put("mail.smtp.auth", auth);

@@ -52,7 +52,7 @@ public class MemberService {
     }
 
     @Transactional
-    public BoolRespose signUp(SignUpDto memberDto){
+    public BoolRespose signUp(SignUpDto memberDto) {
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
@@ -87,17 +87,17 @@ public class MemberService {
                 .build();
     }
 
-    public Optional<Member> findById(Long id){
+    public Optional<Member> findById(Long id) {
         return memberJpaRepository.findMemberById(id);
     }
 
-    public Optional<Member> findByName(String name){
+    public Optional<Member> findByName(String name) {
         return memberJpaRepository.findMemberByName(name);
     }
-    public Optional<Member> findByMemberId(String memberId){
+    public Optional<Member> findByMemberId(String memberId) {
         return memberJpaRepository.findMemberByMemberId(memberId);
     }
-    public Optional<Member> findByNameAndPhoneNum(MemberDto memberDto){
+    public Optional<Member> findByNameAndPhoneNum(MemberDto memberDto) {
         return memberJpaRepository.findMemberByNameAndPhoneNum(memberDto.getName(),memberDto.getPhoneNum());
     }
 
@@ -106,13 +106,13 @@ public class MemberService {
         return matcher.matches();
     }
 
-    public boolean isValidPhone(String phone){
+    public boolean isValidPhone(String phone) {
         Matcher matcher = phonePattern.matcher(phone);
         return matcher.matches();
     }
 
     @Transactional
-    public BoolRespose checkAuthCode(String memberId, String authCode){
+    public BoolRespose checkAuthCode(String memberId, String authCode) {
         log.info("MemberId = {}",memberId);
         log.info("authCode = {}",authCode);
         Optional<Member> member = memberJpaRepository.findMemberByMemberId(memberId);
@@ -125,7 +125,7 @@ public class MemberService {
     }
 
     @Transactional
-    public BoolRespose authCodeEdit(Member member, String message){
+    public BoolRespose authCodeEdit(Member member, String message) {
 
         Optional<Member> value = memberJpaRepository.findMemberByMemberId(member.getMemberId());
 
@@ -145,7 +145,7 @@ public class MemberService {
     }
 
     @Transactional
-    public BoolRespose passwordReset(LoginDto loginDto){
+    public BoolRespose passwordReset(LoginDto loginDto) {
         Optional<Member> member = memberJpaRepository.findMemberByMemberId(loginDto.getMemberId());
 
 
@@ -163,7 +163,7 @@ public class MemberService {
         return BoolRespose.builder().ok(true).build();
     }
     @Transactional
-    public ResponseEntity<TokenDto> kakaoSignUp(KakaoSignUpDto kakaoSignUpDto){
+    public ResponseEntity<TokenDto> kakaoSignUp(KakaoSignUpDto kakaoSignUpDto) {
 
         String accessToken = kakaoSignUpDto.getAccessToken();
         KakaoResult kakaoResult = requestUser(accessToken);
@@ -272,7 +272,7 @@ public class MemberService {
         return kakaoToken;
     }
 
-    public KakaoResult requestUser(String accessToken){
+    public KakaoResult requestUser(String accessToken) {
         log.info("requestUser 시작");
         String strUrl = "https://kapi.kakao.com/v2/user/me"; //request를 보낼 주소
         KakaoResult user = new KakaoResult(); //response를 받을 객체

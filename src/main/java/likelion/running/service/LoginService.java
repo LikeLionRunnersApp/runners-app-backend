@@ -30,7 +30,7 @@ public class LoginService implements UserDetailsService {
                 .orElseThrow(()->new UsernameNotFoundException(memberName + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-    private org.springframework.security.core.userdetails.User createMember(String memberName, Member member){
+    private org.springframework.security.core.userdetails.User createMember(String memberName, Member member) {
         if (!member.isActivated()) {
             throw new RuntimeException(memberName + " -> 활성화되어 있지 않습니다.");
         }

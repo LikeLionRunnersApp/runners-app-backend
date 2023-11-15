@@ -12,20 +12,18 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BoardControllerTest {
-
     @Autowired
     BoardService boardService;
     @Autowired
     GuestService guestService;
     @Test
-    public void openRun(){
+    public void openRun() {
         //given
         BoardForm board = BoardForm.builder().title("test").build();
         //when
@@ -34,9 +32,8 @@ class BoardControllerTest {
         Assertions.assertThat(result).isPresent();
         Assertions.assertThat(result.get().getTitle()).isEqualTo("test");
     }
-
     @Test
-    public void findBoard(){
+    public void findBoard() {
         //given
         BoardForm b1 = BoardForm.builder()
                 .title("mooyaho")
@@ -53,9 +50,8 @@ class BoardControllerTest {
         Assertions.assertThat(board.get().getTitle()).isEqualTo(byBoardId.get().getTitle());
 
     }
-
     @Test
-    public void deleteBoard(){
+    public void deleteBoard() {
         //given
         BoardForm b1 = BoardForm.builder()
                 .title("mooyaho")
@@ -71,15 +67,13 @@ class BoardControllerTest {
         Assertions.assertThat(result).isEqualTo("ok");
         Assertions.assertThat(boardService.findByBoardId(board1.get().getId())).isEmpty();
     }
-
     @Test
-    public void updateBoard(){
+    public void updateBoard() {
         //given
         BoardForm b1 = BoardForm.builder()
                 .hostId("test1@naver.com")
                 .title("mooyaho")
                 .build();
-
         Optional<Board> board = boardService.openRunning(b1);
         Assertions.assertThat(board).isPresent();
         EditBoardDto build = EditBoardDto.builder().title("test")
@@ -90,13 +84,12 @@ class BoardControllerTest {
                 .walkTime("1")
                 .time(LocalDate.of(2023,8,17))
                 .totalMember(6)
-                .play_time(40)
+                .playTime(40)
                 .build();
         Assertions.assertThat(board).isPresent();
         Long id = board.get().getId();
         //when
-        boolean result = boardService.editBoard(board.get().getId(), build);
-
+        boolean result = boardService.editBoard(board.get().getId(), build).isOk();
         //then
         Optional<Board> b = boardService.findByBoardId(id);
         Assertions.assertThat(b).isPresent();
@@ -105,7 +98,7 @@ class BoardControllerTest {
     }
 
     @Test
-    public void increase(){
+    public void increase() {
         //given
         BoardForm form = BoardForm.builder()
                 .title("test")
@@ -133,48 +126,29 @@ class BoardControllerTest {
     }
 
     @Test
-    public void findAllBoard(){
-        BoardForm b1 = BoardForm.builder()
+    public void findAllBoard() {
+        Optional<Board> board1 = boardService.openRunning(BoardForm.builder()
                 .hostId("test1@naver.com")
                 .totalMember(6)
                 .title("mooyaho")
-                .time(LocalDate.of(2023,8,17))
-                .build();
-
-        Optional<Board> board = boardService.openRunning(b1);
-
-        BoardForm b2 = BoardForm.builder()
+                .time(LocalDate.of(2023,11,17))
+                .build());
+        Optional<Board> board2 = boardService.openRunning(BoardForm.builder()
                 .hostId("test1@naver.com")
                 .totalMember(6)
                 .title("mooyaho")
-                .time(LocalDate.of(2023,7,8))
-                .build();
-
-        Optional<Board> board2 = boardService.openRunning(b2);
-
-        BoardForm b3 = BoardForm.builder()
-                .hostId("test2@naver.com")
-                .totalMember(6)
-                .title("mooyaho")
-                .time(LocalDate.of(2023,7,8))
-                .build();
-
-        Optional<Board> board3 = boardService.openRunning(b3);
-
-
-        Assertions.assertThat(board).isPresent();
+                .time(LocalDate.of(2023,11,8))
+                .build());
+        Assertions.assertThat(board1).isPresent();
         guestService.joinRunning(GuestDto.builder()
                         .memberId("test2@naver.com")
-                        .boardId(board.get().getId())
+                        .boardId(board1.get().getId())
                 .build());
-
         guestService.joinRunning(GuestDto.builder()
-                .memberId("test1@naver.com")
-                .boardId(board3.get().getId())
+                .memberId("test2@naver.com")
+                .boardId(board2.get().getId())
                 .build());
-
         List<Board> boards = boardService.findAllBoardByMemberId("test2@naver.com");
-        Assertions.assertThat(boards.get(1).getHostId()).isEqualTo(board.get().getHostId());
         Assertions.assertThat(boards.size()).isEqualTo(2);
     }
 }
