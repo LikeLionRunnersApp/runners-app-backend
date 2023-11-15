@@ -1,13 +1,9 @@
 package likelion.running.domain.token;
 
-
 import io.jsonwebtoken.*;
-
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-
 import java.lang.reflect.MalformedParametersException;
 import java.security.Key;
 import java.util.Arrays;
@@ -46,7 +41,7 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication){
+    public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -62,7 +57,7 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    public String createTokenWithKakao(String subject){
+    public String createTokenWithKakao(String subject) {
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityMilliseconds);//만료 시간 설정
         return Jwts.builder()
@@ -73,23 +68,23 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    public String extractSubject(String accessToken){
+    public String extractSubject(String accessToken) {
         Claims claims = parserClaims(accessToken);
         return claims.getSubject();
     }
 
-    private Claims parserClaims(String accessToken){
+    private Claims parserClaims(String accessToken) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(accessToken)
                     .getBody();
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e){
             return e.getClaims();
         }
     }
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -109,17 +104,17 @@ public class TokenProvider implements InitializingBean {
         return new UsernamePasswordAuthenticationToken(principal,token,authorities);
     }
 
-    public boolean validateToken(String token){
+    public boolean validateToken(String token) {
         try{
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch (io.jsonwebtoken.security.SecurityException | MalformedParametersException e){
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedParametersException e){
             log.info("잘못된 JWT 서명입니다.");
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e){
             log.info("만료된 JWT 토큰입니다.");
-        }catch (UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e){
             log.info("지원되지 않는 JWT 토큰입니다.");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e){
             log.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;

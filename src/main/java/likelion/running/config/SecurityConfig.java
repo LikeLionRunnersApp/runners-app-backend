@@ -3,8 +3,6 @@ package likelion.running.config;
 import likelion.running.domain.token.exception.JwtAccessDeniedHandler;
 import likelion.running.domain.token.exception.JwtAuthenticationEntryPoint;
 import likelion.running.domain.token.TokenProvider;
-
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -17,10 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
-
-import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasRole;
-
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -34,12 +28,14 @@ public class SecurityConfig {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors();
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(AbstractHttpConfigurer::disable)
@@ -50,13 +46,16 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/login")
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/login")
                                 ,new AntPathRequestMatcher("/sign-up")
-                                ,new AntPathRequestMatcher("/kakaologin")
-                                ,new AntPathRequestMatcher("/kakaologin/redirect")
                                 ,new AntPathRequestMatcher("/kakao/MemberCheck")
-                                ,new AntPathRequestMatcher("/kakaoSignUp")
+                                ,new AntPathRequestMatcher("/kakao/SignUp")
+                                ,new AntPathRequestMatcher("/checkDuplicateMemberId")
+                                ,new AntPathRequestMatcher("/auth-send")
+                                ,new AntPathRequestMatcher("/auth-check")
+                                ,new AntPathRequestMatcher("/resetPassword")
+                                ,new AntPathRequestMatcher("/findMemberId")
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -70,8 +69,8 @@ public class SecurityConfig {
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
-
                 .apply(new JwtSecurityConfig(tokenProvider));
+
         return http.build();
     }
 }

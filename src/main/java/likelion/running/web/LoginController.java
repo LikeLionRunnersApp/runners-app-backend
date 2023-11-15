@@ -18,14 +18,12 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginController {
     private final TokenService tokenService;
-
     @Autowired
     public LoginController(TokenService tokenService) {
         this.tokenService = tokenService;
     }
-
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto){
+    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
         return tokenService.makeToken(loginDto);
     }
 }

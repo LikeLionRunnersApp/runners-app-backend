@@ -1,16 +1,17 @@
 package likelion.running.web;
 
-import likelion.running.domain.Result.SignUpResult;
+import likelion.running.domain.member.Member;
 import likelion.running.service.LoginService;
 import likelion.running.service.MemberService;
+import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.memberDto.SignUpDto;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-
+import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LoginControllerTest {
@@ -20,7 +21,7 @@ class LoginControllerTest {
 
     @Autowired
     LoginService loginService;
-//    @Test
+    @Test
     public void signUp(){
         //given
         SignUpDto member = SignUpDto.builder().build();
@@ -29,14 +30,16 @@ class LoginControllerTest {
         member.setCheckPassWord("qwer");
         member.setName("park");
         //when
-        SignUpResult result = memberService.signUp(member);
+        BoolRespose result = memberService.signUp(member);
 
         //then
-        Assertions.assertThat(result.getSignUpResult()).isEqualTo("true");
+        Assertions.assertThat(result.isOk()).isEqualTo(true);
+        Optional<Member> find = memberService.findByMemberId("lion@naver.com");
+        Assertions.assertThat(find.get().getName()).isEqualTo("park");
 
     }
 
-//    @Test
+    @Test
     public void login(){
         //given
         SignUpDto member = SignUpDto.builder()
@@ -45,13 +48,11 @@ class LoginControllerTest {
         member.setPassword("qwer");
         member.setCheckPassWord("qwer");
         member.setName("park");
-        SignUpResult result = memberService.signUp(member);
+        BoolRespose result = memberService.signUp(member);
         //when
         UserDetails userDetails = loginService.loadUserByUsername("lion@naver.com");
-
         //then
-        Assertions.assertThat(result.getSignUpResult()).isEqualTo("true");
-//        Assertions.assertThat(result2).isEmpty();
+        Assertions.assertThat(userDetails.getUsername()).isEqualTo("lion@naver.com");
 
     }
 

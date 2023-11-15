@@ -7,13 +7,10 @@ import java.util.Optional;
 
 @Repository
 public interface MemberJpaRepository extends JpaRepository<Member,Long> {
-
     Optional<Member> findMemberByMemberId(String memberId);
     Optional<Member> findMemberById(Long id);
-
     Optional<Member> findMemberByName(String name);
     @EntityGraph(attributePaths = "authorities")
     Optional<Member> findOneWithAuthoritiesByMemberId(String memberId);
-
     Optional<Member> findMemberByNameAndPhoneNum(String name,String phoneNum);
 }

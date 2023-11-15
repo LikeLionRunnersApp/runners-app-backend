@@ -26,7 +26,7 @@ public class TokenService {
         this.tokenProvider = tokenProvider;
     }
 
-    public ResponseEntity<TokenDto> makeToken(LoginDto loginDto){
+    public ResponseEntity<TokenDto> makeToken(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getMemberId(),loginDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -42,7 +42,7 @@ public class TokenService {
         return new ResponseEntity<>(new TokenDto(jwt),httpHeaders, HttpStatus.OK);
     }
 
-    public ResponseEntity<TokenDto> makeTokenWithKakao(String memberId){
+    public ResponseEntity<TokenDto> makeTokenWithKakao(String memberId) {
 
         String jwt = tokenProvider.createTokenWithKakao(memberId);
 

@@ -12,14 +12,14 @@ import javax.mail.internet.MimeMessage;
 import java.util.Random;
 @Slf4j
 @Service
-public class EmailServiceImpl implements EmailService{
+public class EmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender emailSender;
 
     public static final String ePw = generateRandomString(10);
 
-    private MimeMessage generateMessage(String to)throws Exception{
+    private MimeMessage generateMessage(String to)throws Exception {
         log.info("보내는 대상 :"+ to);
         log.info("인증 번호 :"+ePw);
         MimeMessage message = emailSender.createMimeMessage();
@@ -40,11 +40,10 @@ public class EmailServiceImpl implements EmailService{
                 ePw+"<strong><div><br/> " +
                 "</div>";
         message.setText(text,"utf-8","html");
-        message.setFrom(new InternetAddress("parkjkjk010@gamil.com","runningLion"));//보내는 사람
+        message.setFrom(new InternetAddress("parkjkjk010@gamil.com","runningLion"));
 
         return message;
     }
-
 
     public static String generateRandomString(int length) {
         // 무작위 문자열을 생성할 문자열 세트
