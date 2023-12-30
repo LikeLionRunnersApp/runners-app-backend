@@ -23,6 +23,7 @@ public class MemberEditController {
         this.memberService = memberService;
         this.emailService = emailService;
     }
+
     @PostMapping("/findMemberId")
     public MemberIdDto handleFindMemberName(@RequestBody MemberDto memberDto) {
         // 아이디 찾기 로직 수행 후 결과를 모델에 추가하고 결과 화면 템플릿을 반환...log.info(name.get());
@@ -33,25 +34,30 @@ public class MemberEditController {
                 .memberId(member.map(Member::getMemberId).orElse(""))
                 .build();
     }
+
     @PostMapping("/auth-send")
     public BoolRespose sendAuthMail(@RequestBody MemberDto memberDto) throws Exception {
-        // 비밀번호 재설정 로직 수행 후 결과를 모델에 추가하고 결과 화면 템플릿을 반환...
         Optional<Member> member = memberService.findByNameAndPhoneNum(memberDto);
         if(member.isPresent()){
             String memberId = member.map(Member::getMemberId).orElseThrow();
             String phoneNum = member.map(Member::getPhoneNum).orElseThrow();
+            String message = emailService.sendSimpleMessage(memberId);
             log.info(phoneNum);
             log.info(memberId);
-            String message = emailService.sendSimpleMessage(memberId);
-            return memberService.authCodeEdit(member.get(),message);
+            return memberService.authCodeEdit(member.get(), message);
         }
         return BoolRespose.builder()
                 .ok(false)
                 .build();
-    }
+
+    }   // 비밀번호 재설정 로직 수행 후 결과를 모델에 추가하고 결과 화면 템플릿을 반환
+
     @PostMapping("/auth-check")
     public BoolRespose checkAuthCode(@RequestBody AuthDto authDto) {
-        return memberService.checkAuthCode(authDto.getMemberId(), authDto.getAuthCode());
+        return memberService.checkAuthCode(
+                authDto.getMemberId(),
+                authDto.getAuthCode()
+        );
     }
     @PatchMapping("/resetPassword")
     public BoolRespose resetPassword(@RequestBody LoginDto loginDto) {

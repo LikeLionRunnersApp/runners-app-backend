@@ -6,6 +6,7 @@ import likelion.running.domain.guest.Guest;
 import likelion.running.domain.guest.GuestJpaRepository;
 import likelion.running.web.dto.BoolRespose;
 import likelion.running.web.dto.boardDto.BoardForm;
+import likelion.running.web.dto.boardDto.ComingDto;
 import likelion.running.web.dto.boardDto.EditBoardDto;
 import likelion.running.web.dto.memberDto.GuestDto;
 import lombok.extern.slf4j.Slf4j;
@@ -61,32 +62,39 @@ public class BoardService {
         return boardJpaRepository.findAllByNormalTime(date);
     }
 
-    public List<Board> findAllBoardByMemberId(String memberId) {
+    public List<ComingDto> findAllBoardByMemberId(String memberId) {
 
         List<Guest> guests = guestJpaRepository.findByGuestId(memberId);
-
         List<Board> boards = boardJpaRepository.findAllByHostIdAndNormalTimeIsAfter(memberId, LocalDate.now());
+        List<ComingDto> list = new ArrayList<>();
+        log.info("isEmpty? "+String.valueOf(boards.isEmpty()));
 
-        List<Board> list = new ArrayList<>();
         for (Board board : boards) {
             log.info(String.valueOf(board.getId()));
             LocalDate time = board.getNormalTime();
             if(time!=null){
-                list.add(board);
+                list.add(ComingDto.builder()
+                        .title(board.getTitle())
+                        .flag(board.getFlag())
+                        .time(board.getNormalTime())
+                        .build());
             }
         }
-        log.info(String.valueOf(boards.isEmpty()));
-
+        log.info("Guests is Empty? "+String.valueOf(guests.isEmpty()));
         for (Guest guest : guests) {
             Optional<Board> board = boardJpaRepository.findBoardById(guest.getBoard().getId());
             log.info(guest.getGuestId());
             board.ifPresent(value-> {
                 if(value.getNormalTime()!=null && value.getNormalTime().isAfter(LocalDate.now()))
-                    list.add(value);
+                    list.add(ComingDto.builder()
+                            .title(value.getTitle())
+                            .flag(value.getFlag())
+                            .time(value.getNormalTime())
+                            .build());
             });
         }
 
-        Comparator<Board> comparator = Comparator.comparing(Board::getNormalTime,Comparator.nullsLast(Comparator.naturalOrder()));
+        Comparator<ComingDto> comparator = Comparator.comparing(ComingDto::getTime, Comparator.nullsLast(Comparator.naturalOrder()));
         list.sort(comparator);
 
         return list;

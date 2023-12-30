@@ -53,6 +53,9 @@ public class MemberService {
 
     @Transactional
     public BoolRespose signUp(SignUpDto memberDto) {
+        if(memberJpaRepository.findOneWithAuthoritiesByMemberId(memberDto.getMemberId()).orElse(null)!=null) {
+            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+        }
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
@@ -167,7 +170,7 @@ public class MemberService {
 
         String accessToken = kakaoSignUpDto.getAccessToken();
         KakaoResult kakaoResult = requestUser(accessToken);
-        if(memberJpaRepository.findMemberByMemberId(kakaoResult.getEmail()).isPresent()){
+        if(memberJpaRepository.findMemberByMemberId(kakaoResult.getEmail()).isPresent()) {
             return new ResponseEntity<>(new TokenDto(""),new HttpHeaders(), HttpStatus.OK);
         }
 
@@ -183,7 +186,8 @@ public class MemberService {
                 .member(member)
                 .authority(Authority.builder()
                         .authorityName("ROLE_USER")
-                        .build())
+                        .build()
+                )
                 .build();
 
         member.getAuthorities().add(memberAuthority);
@@ -266,7 +270,7 @@ public class MemberService {
             br.close();
             bw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.toString());
         }
         log.info("카카오토큰생성완료>>>{}", kakaoToken);
         return kakaoToken;
@@ -283,9 +287,9 @@ public class MemberService {
 
             //POST 요청
             conn.setRequestMethod("POST");
-            conn.setDoOutput(true);//outputStreamm으로 post 데이터를 넘김
+            conn.setDoOutput(true); //outputStreamm 으로 post 데이터를 넘김
 
-            //전송할 header 작성, 인자로 받은 access_token전송
+            //전송할 header 작성, 인자로 받은 access_token 전송
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
 
@@ -293,7 +297,7 @@ public class MemberService {
             int responseCode = conn.getResponseCode();
             log.info("requestUser의 responsecode(200이면성공): {}",responseCode);
 
-            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            //요청을 통해 얻은 JSON 타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
             String result = "";
@@ -303,7 +307,7 @@ public class MemberService {
             }
             br.close();
 
-            log.info("response body: {}",result);
+            log.info("response body: {}", result);
 
 
             //Jackson으로 json 파싱할 것임
@@ -334,7 +338,7 @@ public class MemberService {
 
 
         }catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.toString());
         }
         return user;
     }
