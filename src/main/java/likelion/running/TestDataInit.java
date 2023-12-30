@@ -1,29 +1,34 @@
 package likelion.running;
 
+import likelion.running.domain.board.Board;
+import likelion.running.domain.board.BoardStatus;
+import likelion.running.domain.board.FlagType;
 import likelion.running.domain.member.*;
 import likelion.running.service.BoardService;
 import likelion.running.service.GuestService;
 import likelion.running.service.MemberService;
+import likelion.running.web.dto.boardDto.BoardForm;
+import likelion.running.web.dto.memberDto.AuthorityDto;
+import likelion.running.web.dto.memberDto.GuestDto;
+import likelion.running.web.dto.memberDto.SignUpDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
-    private final MemberJpaRepository memberJpaRepository;
     private final MemberService memberService;
     private final GuestService guestService;
     private final BoardService boardService;
-    private final PasswordEncoder passwordEncoder;
-    private final MemberAuthorityJpaRepository memberAuthorityJpaRepository;
     private final AuthorityJpaRepository authorityJpaRepository;
-    Set<MemberAuthority> set = new HashSet<>();
     @PostConstruct
     public void init(){
         Authority authority1 = Authority.builder()
@@ -36,6 +41,74 @@ public class TestDataInit {
         if(authorityJpaRepository.findByAuthorityName(authority2.getAuthorityName())==null){
             authorityJpaRepository.save(authority2);
         }
+        Set<AuthorityDto> set = new HashSet<>();
+        set.add(AuthorityDto.builder()
+                .authorityName("ROLE_ADMIN")
+                .build());
+
+        set.add(AuthorityDto.builder()
+                .authorityName("ROLE_USER")
+                .build());
+
+        if(memberService.findByMemberId("admin@running.com").isEmpty()){
+            memberService.signUp(SignUpDto.builder()
+                            .memberId("admin@running.com")
+                            .name("admin")
+                            .password("runningadmin")
+                            .checkPassWord("runningadmin")
+                            .phoneNum("010-0000-0000")
+                            .authorityDtoSet(set)
+                        .build());
+            }
+
+        if(boardService.findAllBoardByMemberId("admin@running.com").isEmpty()){
+            boardService.openRunning(
+                    BoardForm.builder()
+                        .title("test")
+                        .hostId("admin@running.com")
+                        .content("test cotent")
+                        .flag(FlagType.RUN)
+                        .time(LocalDate.of(2024,7,15))
+                        .totalMember(6)
+                        .repeat(3)
+                        .place("나메크성")
+                        .build()
+                );
+
+            boardService.openRunning(
+                    BoardForm.builder()
+                            .title("밥은 먹고 뛰냐")
+                            .hostId("admin@running.com")
+                            .content("test content")
+                            .flag(FlagType.INTERVAL)
+                            .time(LocalDate.of(2024,11,23))
+                            .totalMember(9)
+                            .build()
+            );
+
+            Optional<Board> board = boardService.openRunning(
+                    BoardForm.builder()
+                            .title("board")
+                            .hostId("test@running.com")
+                            .content("test test content")
+                            .flag(FlagType.WALK)
+                            .time(LocalDate.of(2024,1,1))
+                            .totalMember(10)
+                            .repeat(4)
+                            .place("장대동")
+                            .status(BoardStatus.START)
+                            .build()
+            );
+
+            guestService.joinRunning(GuestDto.builder()
+                            .memberId("admin@running.com")
+                            .boardId(board.get().getId())
+                            .participate(true)
+                    .build());
+        }
+    }
+}
+
         // 예시로 권한 이름을 설정
         // 다른 필드 값 설정
         // Authority 저장
@@ -109,5 +182,3 @@ public class TestDataInit {
 //                .participate(true)
 //                .boardId(board1.get().getId())
 //                .build());
-    }
-}

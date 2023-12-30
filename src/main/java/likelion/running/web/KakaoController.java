@@ -36,7 +36,7 @@ public class KakaoController {
         log.info("{}",accessToken.get("accessToken"));
         KakaoResult kakaoResult = memberService.requestUser(accessToken.get("accessToken"));
         Optional<Member> member = memberService.findByMemberId(kakaoResult.getEmail());
-        if(member.isEmpty()){
+        if (member.isEmpty()) {
             return new ResponseEntity<>(new TokenDto(""), new HttpHeaders(), HttpStatus.OK);
         }
         LoginDto loginDto = new LoginDto();
@@ -45,7 +45,7 @@ public class KakaoController {
     }
     @PostMapping("/kakao/SignUp")
     public ResponseEntity<TokenDto> kakaoSingUp(@Validated @RequestBody KakaoSignUpDto signUpDto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.info("전화번호 혹은 이름이 잘못입력되었습니다.");
         }
         return memberService.kakaoSignUp(signUpDto);
